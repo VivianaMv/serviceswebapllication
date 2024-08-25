@@ -1,10 +1,39 @@
+.header-container{
+    margin: 30px;
+    background-color:antiquewhite;
+    font-size: large;
+    
+}
+
+
 .header-title{
-    margin-left: 50%;
+margin-left: 50px;
+   
+}
+.options{
     margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+.btnsignIn
+{
+    height: 3ch;
+    margin-bottom: 5%;
+    margin-right: 5px;
+    font-size: large;
+  
+}
+.btnCreate{
+    height: 30px;
+    margin-right: 50px;
+    font-size: large;
+  
+
 }
 
 .logo-home{
-    margin-left: 5%;
+    margin-left: 5px;
     height: 300px;
 }
 .descrip-home{
@@ -32,4 +61,16 @@
 
     margin-left: 30%;
     font-size: x-large;
+}
+
+.CleaningDescrip{
+    margin-right: 50px;
+    margin-left: 40%;
+}
+.logo-cleaning2 {
+    margin-left: 400px;
+    margin-top: 50px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
 }

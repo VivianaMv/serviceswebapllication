@@ -6,6 +6,8 @@ import './Style.css';
 const Home = () => {
     return (
         <div className='home-container'>
+
+          
             {/* <img
                 className='logo-home'
                 src={require('../images/logo-home.jpg')}

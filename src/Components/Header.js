@@ -9,8 +9,19 @@ const Header = ({ email, handleSignOut }) => {
 
     return (
         <div className="header-container">
-            <h1 className="header-title">EasyHome</h1>
+            <div className="options">
             <img src={logo} alt="Logo" className="logo-home" />
+            <a className='Home' href='Home.js'>Home</a>
+            <a className='Services' href='Services.js' target='_blanck'>Services</a>
+            <a className='About' href='About.js' target='_blanck'>About Us</a>
+            <a className='Contact' href='Contact.js' target='_blanck'>Contact Us</a>
+            <div>
+            <button className="btnsignIn"> Sign In</button>
+            <button className="btnCreate"> Create an Account</button>
+            </div>
+            
+            </div>
+            <di> <h1 className="header-title">EasyHome</h1></di>
 
             {/* {showHeaderRight && (
                 <div className="header-right">
