@@ -63,14 +63,23 @@ margin-left: 50px;
     font-size: x-large;
 }
 
-.CleaningDescrip{
+.Descrip{
     margin-right: 50px;
-    margin-left: 40%;
+    margin-left: 30%;
 }
-.logo-cleaning2 {
-    margin-left: 400px;
-    margin-top: 50px;
-    margin-top: 50px;
-    display: flex;
-    justify-content: space-between;
+.logo-cleaning2 , 
+.logo-painting2,
+.logo-gardening2
+
+ {
+    margin-left: 300px; 
+    
+}
+.btnBook{
+    margin-left: 5px;
+    background-color: greenyellow;
+    margin: 5px;
+    font-size: large;
+
+    
 }
