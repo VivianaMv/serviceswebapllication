@@ -63,23 +63,38 @@ margin-left: 50px;
     font-size: x-large;
 }
 
-.Descrip{
-    margin-right: 50px;
-    margin-left: 30%;
-}
+
 .logo-cleaning2 , 
 .logo-painting2,
 .logo-gardening2
 
  {
-    margin-left: 300px; 
+    margin-left: 200px; 
+    padding: 30px;
     
 }
-.btnBook{
-    margin-left: 5px;
-    background-color: greenyellow;
-    margin: 5px;
-    font-size: large;
 
-    
+.Description{
+   
+    padding-left: 20px;
+  
+}
+.btnBook{
+   
+    background-color: greenyellow;
+    margin: 20px;
+    font-size: large;  
+}
+.About{
+    margin-top: 8%;
+    margin-left: 15%;
+  
+}
+.form{
+    margin-left: 20%;
+    margin-right: 20%;
+    border-style:double;
+    padding: 20px;
+
+
 }
