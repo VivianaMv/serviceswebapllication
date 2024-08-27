@@ -8,19 +8,24 @@ import Services from './Components/Services';
 import AboutUs from './Components/AboutUs';
 import Contact from './Components/Contact';
 import NewHeader from './Components/New-Header';
+import SignUpOptions from './Components/SignUpOptions';
+import SignIn from './Components/SignIn';
 
 
 function App() {
   return (
     <div >
-      <NewHeader/>
-      {/* <Header /> */}
-      <Home/>
-      {/* <Privacy />
-      <TermCon /> 
-     <Services/>
-      <AboutUs />
-      <Contact /> */}
+      {/* <NewHeader/> 
+     <Header /> 
+       <Home/> 
+     <Privacy />
+      <TermCon />  */}
+     {/* <Services/> */}
+      {/* <AboutUs />
+      <Contact />  */}
+      <SignUpOptions /> 
+      {/* <SignIn /> */}
+    
       
 
       
