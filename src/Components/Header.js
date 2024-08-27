@@ -1,36 +1,33 @@
 import React from "react";
 import './Style.css';
-import logo from '../images/logo-home.jpg';
 
-const Header = ({ email, handleSignOut }) => {
-
-    const location = window.location.pathname;
-    const showHeaderRight = location !== "/signup" && location !== "/signin" && location !== "/reset";
-
+const Header = ({ email, handleSignOut, isSignedIn }) => {
     return (
         <div className="header-container">
-            <div className="options">
-                <img src={logo} alt="Logo" className="logo-home" />
-                <div className="nav-links">
-                    <a className='Home' href='Home.js'>Home</a>
-                    <a className='Services' href='Services.js' target='_blanck'>Services</a>
-                    <a className='About' href='About.js' target='_blanck'>About Us</a>
-                    <a className='Contact' href='Contact.js' target='_blanck'>Contact Us</a>
-                </div>
+            <div className="Home-title">Easy Home</div>
 
-                <div className="buttons-home">
-                    <button className="btnsignIn"> Sign In</button>
-                    <button className="btnCreate"> Create an Account</button>
-                </div>
+            <div className="nav-links">
+                <a className='nav-item' href='/home'>Home</a>
+                <a className='nav-item' href='/services'>Services</a>
+                <a className='nav-item' href='/about'>About</a>
+                <a className='nav-item' href='/contact'>Contact</a>
             </div>
-            <div> <h1 className="header-title">EasyHome</h1></div>
 
-            {/* {showHeaderRight && (
-                <div className="header-right">
-                    <button onClick={handleSignOut} className="sign-out">Sign Out</button>
-                    <div className="email-in-use">{email}</div>
-                </div>
-            )} */}
+            <div className="auth-buttons">
+                {/* {isSignedIn ? (
+                    <>
+                        <button onClick={handleSignOut} className="btnSignOut">Sign Out</button>
+                        <div className="email-in-use">{email}</div>
+                    </>
+                ) : (
+                    <>
+                        <button className="btnSignIn">Sign In</button>
+                        <button className="btnCreate">Sign Up</button>
+                    </>
+                )} */}
+                <button className="btnSignIn">Sign In</button>
+                <button className="btnSignIn">Sign Up</button>
+            </div>
         </div>
     );
 };

@@ -1,50 +1,43 @@
 import React from 'react'
 import './Style.css';
 import logo from '../images/logo-home.jpg';
+import Footer from './Footer';
+import Header from './Header';
 
 
 const Home = () => {
     return (
         <div className='home-container'>
-
-
-            {/* <img
-                className='logo-home'
-                src={require('../images/logo-home.jpg')}
-                alt='home logo' /> */}
-            {/* <div className='home-presentation'>
-                <img src={logo} alt="Logo" className="logo-home" />
-                <div className='descrip-home'>Welcome to EasyHome, your trusted partner for comprehensive cleaning and repair solutions. We specialize in transforming spaces with meticulous cleaning services and reliable repairs. Whether it's maintaining a spotless home or fixing that stubborn issue, we're dedicated to delivering quality service with attention to detail. At EasyHome, your satisfaction is our priority, and we're here to make your space shine and function flawlessly.</div>
-            </div> */}
-            <table>
+            <Header/>
+            <table className='home-table'>
                 <tr>
                     <td><img src={logo} alt="Logo" className="logo-home" /></td>
                     <td className='descrip-home'>Welcome to EasyHome, your trusted partner for comprehensive cleaning and repair solutions. We specialize in transforming spaces with meticulous cleaning services and reliable repairs. Whether it's maintaining a spotless home or fixing that stubborn issue, we're dedicated to delivering quality service with attention to detail. At EasyHome, your satisfaction is our priority, and we're here to make your space shine and function flawlessly.</td>
                 </tr>
-
             </table>
 
-
-            <img
-                className='logo-cleaning'
-                src={require('../images/house-cleaning.jpg')}
-                alt='cleaning logo' />
-
-            <img
-                className='logo-gardening'
-                src={require('../images/gardening.jpg')}
-                alt='gardening logo' />
-
-            <img
-                className='logo-painting'
-                src={require('../images/painting.jpg')}
-                alt='painting logo' /><br></br><br></br><br></br><br></br>
-
-
-            <a className='Privacy' href='Privacy.js'>Privacy</a>
-
-            <a className='Privacy' href='TermCon.js' target='_blanck'>Terms and conditions</a>
-
+            <div className='home-logos'>
+                <div>
+                    <img
+                        src={require('../images/house-cleaning.jpg')}
+                        alt='cleaning logo' />
+                    <p className='logo-home-title'>Cleaning</p>
+                </div>
+                <div>
+                    <img
+                        src={require('../images/gardening.jpg')}
+                        alt='gardening logo' />
+                    <p className='logo-home-title'>Gardening</p>
+                </div>
+                <div>
+                    <img
+                        src={require('../images/painting.jpg')}
+                        alt='painting logo' />
+                    <p className='logo-home-title'>Painting</p>
+                </div>
+            </div>
+            
+            <Footer/>
         </div>
 
 

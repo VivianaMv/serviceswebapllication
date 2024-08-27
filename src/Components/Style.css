@@ -1,3 +1,8 @@
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(253, 249, 244);
+}
+
 .header-container {
     display: flex;
     align-items: center;
@@ -15,8 +20,12 @@
     gap: 20px; 
 }
 
+.home-table{
+    margin: 30px;
+}
+
 .logo-home {
-    width: 250px; 
+    width: 300px; 
     height: auto;
 }
 
@@ -24,10 +33,8 @@
     font-size: 16px;
     line-height: 1.5;
     padding: 50px 150px;
-    
+    text-align: justify;
 }
-
-
 
 .Home-title{
     font-size: xx-large;
@@ -45,26 +52,25 @@
     color: black;
     font-size: large;
     transition: color 0.3s;
-    padding: 20px 30px;
+    padding: 30px 40px;
 }
 
 .nav-item:hover {
-    color: gray;
-    background-color: lightgray;
-    padding: 20px 30px;
-    
+    background-color: rgb(247, 222, 189);
+    padding: 30px 40px;
+    color: black;
 }
 
 .auth-buttons {
     display: flex;
     align-items: center;
-    gap: 10px;
-    width: 200px;
+    gap: 20px;
+    width: 250px;
 }
 
 button{
     font-size: large;
-    padding: 5px 15px;
+    padding: 15px 20px;
     cursor: pointer;
     border: none;
     background-color: #007BFF;
@@ -73,8 +79,8 @@ button{
     transition: background-color 0.3s;
 }
 
-.btnSignIn:hover, .btnCreate:hover, .btnSignOut:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+button:hover {
+    background-color: #0056b3;
 }
 
 .email-in-use {
@@ -83,11 +89,7 @@ button{
     color: #333;
 }
 
-.buttons-home {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Adds space between buttons */
-}
+
 .home-presentation{
     display: inline;
     grid-template-rows: repeat(2, 1fr);
@@ -114,21 +116,18 @@ button{
     font-size: x-large;
     
 }
-.logo-cleaning{
-    margin-left: 400px;
-    margin-top: 50px;
-}
-.logo-gardening{ 
-    margin-left: 200px;
 
+.home-logos{
+    display: flex;
+    gap: 200px;
+    justify-content: center;
+    margin-top: 100px;
 }
-.logo-painting {
-    margin-left: 200px;    
+
+.logo-home-title{
+    text-align: center;
 }
-.Privacy{
-    
-    margin-left: 30%;
-}
+
 .PrivacyPage {
 
     margin-left: 30%;
@@ -194,4 +193,56 @@ width: 400px;
     align-items: center;
 } */
 
+
+
+.footer{
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    margin-top: 100px;
+    margin-bottom: 20px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+a:hover{
+    color: blue;
+}
+
+.client-form{
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 400px;
+    justify-content: center;
+    align-items: center;
+}
+
+.sign-up-pages{
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.client-title{
+    text-align: center;
+    margin-top: 100px;
+}
+
+.input-client-form{
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid gray;
+    height: 30px;
+    margin-bottom: 15px;
+}
 
