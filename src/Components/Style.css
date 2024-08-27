@@ -68,7 +68,7 @@ body{
     width: 250px;
 }
 
-.btnSignIn, .btnCreate, .btnSignOut {
+button {
     font-size: large;
     padding: 15px 20px;
     cursor: pointer;
@@ -204,7 +204,7 @@ a:hover{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 .client-title{
@@ -219,4 +219,8 @@ a:hover{
     border: 1px solid gray;
     height: 30px;
     margin-bottom: 15px;
+}
+
+.address-style{
+    margin-top: 20px;
 }
