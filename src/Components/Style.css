@@ -68,6 +68,7 @@ body{
     width: 250px;
 }
 
+
 button{
     font-size: large;
     padding: 15px 20px;
@@ -229,7 +230,7 @@ a:hover{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 .client-title{
@@ -246,3 +247,6 @@ a:hover{
     margin-bottom: 15px;
 }
 
+.address-style{
+    margin-top: 20px;
+}
