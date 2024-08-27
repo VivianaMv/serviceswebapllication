@@ -7,44 +7,41 @@ const Contact = () => {
     return (
         <div className='home-container'>
 
-            <h1>Welcome to EasyHome</h1>
+            <h1 className='Welcome'>Welcome to EasyHome</h1>
 
             <p className='descrip-home'>Do you have a question? We are here to help you. <br></br><br></br>
-                Send us an email to xxxxxx or  send us a message by filling out this form and we will contact you as soon as possible.<br></br>
+                Send us a message by filling out this form and we will contact you as soon as possible.<br></br>
                 Thank you!</p>
 
            <form className='form'>
             <div>
-                <h2>Personal information </h2>
+                    <h2 className='Welcome' >Personal information </h2>
             </div>
             <div>
-                    <label>Name :</label>
-                    <input type="text" id="name"/>
-            </div>  
-                <div>
+                    <label for>Name :</label>
+                    <input type="text" id="name" /><br></br><br></br>
                     <label> Last Name :</label>
-                    <input type="text" id="Lastname" />
-                </div>  
+                    <input type="text" id="Lastname" /><br></br><br></br>
+            </div>  
+               
                 <div>
                     <label> Email :</label>
-                    <input type="text" id="Email" />
-                </div>  
-                <div>
+                    <input type="text" id="Email" /><br></br><br></br>
                     <label> Address :</label>
-                    <input type="text" id="Address" />
+                    <input type="text" id="Address" /><br></br><br></br>
                 </div>  
                 <div>
-                    <label> Phone Number :</label>
-                    <input type="number" id="phone" />
+                  
                 </div>  
+               
                 <div>
                     <label>Province :</label>
-                    <input type="text" id="Province" />
-                </div>  
+                    <input type="text" id="Province" /><br></br><br></br>
+                </div>  <br></br><br></br>
                 <div>
                     <label>Menssage :</label>
                     <textarea id='message' name='usermessage' placeholder='Write your menssage here...' />
-                </div>  
+                </div> <br></br><br></br>
                <button type='submit'> Submit </button>                  
                  
             </form>
