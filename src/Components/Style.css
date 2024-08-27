@@ -168,8 +168,7 @@ width: 400px;
 } 
  label{
     width: 150px;
-        font-weight: bold;
-        display: inline-block;
+    display: inline-block;
  }   
 .Welcome{
     text-align: center;

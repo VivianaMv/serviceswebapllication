@@ -3,7 +3,7 @@ import './Style.css';
 
 
 
-const TermCon = () => {
+const TermCond = () => {
     return (
         <div className='home-container'>
 
@@ -44,4 +44,4 @@ const TermCon = () => {
     );
 
 }
-export default TermCon;
+export default TermCond;
