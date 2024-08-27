@@ -68,7 +68,7 @@ body{
     width: 250px;
 }
 
-.btnSignIn, .btnCreate, .btnSignOut {
+button{
     font-size: large;
     padding: 15px 20px;
     cursor: pointer;
@@ -145,30 +145,55 @@ button:hover {
     
 }
 
-.Description{
+.services-Description{
    
     padding-left: 20px;
+    padding-right: 80px;
   
 }
-.btnBook{
-   
-    background-color: greenyellow;
-    margin: 20px;
-    font-size: large;  
-}
+
 .About{
-    margin-top: 8%;
-    margin-left: 15%;
+
+    text-align: center;
+    margin-top: 10%;
   
 }
 .form{
-    margin-left: 20%;
-    margin-right: 20%;
-    border-style:double;
+width: 400px;
     padding: 20px;
-
-
+    border-radius: 10px;
+    margin: auto;
+    background-color: #ccc;
+} 
+ label{
+    width: 150px;
+        font-weight: bold;
+        display: inline-block;
+ }   
+.Welcome{
+    text-align: center;
 }
+.SignUpOpt{
+    align-content: center;
+   margin-left: 25%;
+    display: inline-block;
+    }
+/* .form-container {
+          
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+          
+        }
+.error {
+    color: red;
+    margin-top: 10px;
+    margin-left: 45%;
+    display: flex;
+    align-items: center;
+} */
+
+
 
 .footer{
     display: flex;
@@ -220,3 +245,4 @@ a:hover{
     height: 30px;
     margin-bottom: 15px;
 }
+
