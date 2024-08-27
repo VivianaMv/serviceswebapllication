@@ -8,9 +8,26 @@
     height: 100px;
 }
 
-.logo-home {
-    height: 300px;
+.home-presentation {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 20px; 
 }
+
+.logo-home {
+    width: 250px; 
+    height: auto;
+}
+
+.descrip-home {
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 50px 150px;
+    
+}
+
+
 
 .Home-title{
     font-size: xx-large;
@@ -70,6 +87,10 @@
     display: flex;
     align-items: center;
     gap: 10px; /* Adds space between buttons */
+}
+.home-presentation{
+    display: inline;
+    grid-template-rows: repeat(2, 1fr);
 }
 
 .btnsignIn {

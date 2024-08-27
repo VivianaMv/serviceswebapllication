@@ -12,11 +12,18 @@ const Home = () => {
                 className='logo-home'
                 src={require('../images/logo-home.jpg')}
                 alt='home logo' /> */}
+            {/* <div className='home-presentation'>
+                <img src={logo} alt="Logo" className="logo-home" />
+                <div className='descrip-home'>Welcome to EasyHome, your trusted partner for comprehensive cleaning and repair solutions. We specialize in transforming spaces with meticulous cleaning services and reliable repairs. Whether it's maintaining a spotless home or fixing that stubborn issue, we're dedicated to delivering quality service with attention to detail. At EasyHome, your satisfaction is our priority, and we're here to make your space shine and function flawlessly.</div>
+            </div> */}
+            <table>
+                <tr>
+                    <td><img src={logo} alt="Logo" className="logo-home" /></td>
+                    <td className='descrip-home'>Welcome to EasyHome, your trusted partner for comprehensive cleaning and repair solutions. We specialize in transforming spaces with meticulous cleaning services and reliable repairs. Whether it's maintaining a spotless home or fixing that stubborn issue, we're dedicated to delivering quality service with attention to detail. At EasyHome, your satisfaction is our priority, and we're here to make your space shine and function flawlessly.</td>
+                </tr>
 
-            <img src={logo} alt="Logo" className="logo-home" />
+            </table>
 
-
-            <p className='descrip-home'>Welcome to EasyHome, your trusted partner for comprehensive cleaning and repair solutions. We specialize in transforming spaces with meticulous cleaning services and reliable repairs. Whether it's maintaining a spotless home or fixing that stubborn issue, we're dedicated to delivering quality service with attention to detail. At EasyHome, your satisfaction is our priority, and we're here to make your space shine and function flawlessly.</p>
 
             <img
                 className='logo-cleaning'
