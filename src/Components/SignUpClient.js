@@ -4,6 +4,8 @@ import Header from './Header';
 import Footer from './Footer';
 
 const SignUpClient = () => {
+
+    
     return (
         <div className='sign-up-pages'>
             <Header />
