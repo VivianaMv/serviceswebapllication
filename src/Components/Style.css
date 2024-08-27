@@ -1,41 +1,113 @@
-.header-container{
-    margin: 30px;
-    background-color:antiquewhite;
-    font-size: large;
-    
-}
-
-
-.header-title{
-margin-left: 50px;
-   
-}
-.options{
-    margin-top: 50px;
+.header-container {
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    padding: 10px 30px;
+    background-color: antiquewhite;
+    font-size: large;
+    height: 100px;
+}
+
+.home-presentation {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 20px; 
+}
+
+.logo-home {
+    width: 250px; 
+    height: auto;
+}
+
+.descrip-home {
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 50px 150px;
     
 }
-.btnsignIn
-{
+
+
+
+.Home-title{
+    font-size: xx-large;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 500;
+}
+
+.nav-links {
+    display: flex;
+    gap: 40px;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: black;
+    font-size: large;
+    transition: color 0.3s;
+    padding: 20px 30px;
+}
+
+.nav-item:hover {
+    color: gray;
+    background-color: lightgray;
+    padding: 20px 30px;
+    
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 200px;
+}
+
+.btnSignIn, .btnCreate, .btnSignOut {
+    font-size: large;
+    padding: 5px 15px;
+    cursor: pointer;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btnSignIn:hover, .btnCreate:hover, .btnSignOut:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.email-in-use {
+    margin-left: 10px;
+    font-size: medium;
+    color: #333;
+}
+
+.buttons-home {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adds space between buttons */
+}
+.home-presentation{
+    display: inline;
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.btnsignIn {
     height: 3ch;
-    margin-bottom: 5%;
-    margin-right: 5px;
     font-size: large;
-  
 }
-.btnCreate{
+
+.btnCreate {
     height: 30px;
-    margin-right: 50px;
     font-size: large;
-  
-
 }
 
-.logo-home{
-    margin-left: 5px;
-    height: 300px;
+.header-title {
+    margin-top: 20px;
 }
+
+
 .descrip-home{
     margin-left: 300px;
     margin-right: 200px;
@@ -86,7 +158,7 @@ margin-left: 50px;
     font-size: large;  
 }
 .About{
-    margin-top: 8%;
+
     margin-left: 15%;
   
 }

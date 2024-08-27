@@ -7,18 +7,20 @@ import Header from './Components/Header';
 import Services from './Components/Services';
 import AboutUs from './Components/AboutUs';
 import Contact from './Components/Contact';
+import NewHeader from './Components/New-Header';
 
 
 function App() {
   return (
     <div >
-      <Header />
+      <NewHeader/>
+      {/* <Header /> */}
       <Home/>
-      <Privacy />
+      {/* <Privacy />
       <TermCon /> 
      <Services/>
       <AboutUs />
-      <Contact />
+      <Contact /> */}
       
 
       
