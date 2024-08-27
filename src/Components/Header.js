@@ -10,18 +10,20 @@ const Header = ({ email, handleSignOut }) => {
     return (
         <div className="header-container">
             <div className="options">
-            <img src={logo} alt="Logo" className="logo-home" />
-            <a className='Home' href='Home.js'>Home</a>
-            <a className='Services' href='Services.js' target='_blanck'>Services</a>
-            <a className='About' href='About.js' target='_blanck'>About Us</a>
-            <a className='Contact' href='Contact.js' target='_blanck'>Contact Us</a>
-            <div>
-            <button className="btnsignIn"> Sign In</button>
-            <button className="btnCreate"> Create an Account</button>
+                <img src={logo} alt="Logo" className="logo-home" />
+                <div className="nav-links">
+                    <a className='Home' href='Home.js'>Home</a>
+                    <a className='Services' href='Services.js' target='_blanck'>Services</a>
+                    <a className='About' href='About.js' target='_blanck'>About Us</a>
+                    <a className='Contact' href='Contact.js' target='_blanck'>Contact Us</a>
+                </div>
+
+                <div className="buttons-home">
+                    <button className="btnsignIn"> Sign In</button>
+                    <button className="btnCreate"> Create an Account</button>
+                </div>
             </div>
-            
-            </div>
-            <di> <h1 className="header-title">EasyHome</h1></di>
+            <div> <h1 className="header-title">EasyHome</h1></div>
 
             {/* {showHeaderRight && (
                 <div className="header-right">
@@ -32,8 +34,5 @@ const Header = ({ email, handleSignOut }) => {
         </div>
     );
 };
-
-
-
 
 export default Header;
