@@ -1,4 +1,4 @@
-// import logo from './logo.svg';
+import React, { useState } from 'react'
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Components/Home';
@@ -11,9 +11,13 @@ import SignUpClient from './Components/SignUpClient';
 import SignUpOptions from './Components/SignUpOptions';
 import SignIn from './Components/SignIn';
 import SignUpProvider from './Components/SignUpProvider';
+import HomeUser from './Components/HomeUser';
+import UserManagement from './Components/UserManagement';
 
 
 function App() {
+  const [userEmail, setUserEmail] = useState("");
+
   return (
     <Router>
       <Routes>
@@ -21,10 +25,11 @@ function App() {
           element={
             <Home/>
           } />
-        <Route path="/signupclient"
+          <Route path="/signupclient" 
           element={
-            <SignUpClient/>
+          <SignUpClient setUserEmail={setUserEmail} />
           } />
+
           <Route path="/signupprovider"
           element={
             <SignUpProvider/>
@@ -55,8 +60,17 @@ function App() {
           } />
           <Route path="/signin"
           element={
-            <SignIn/>
+            <SignIn setUserEmail={setUserEmail}/>
           } />
+          <Route path="/homeuser"
+          element={
+            <HomeUser/>
+          } />
+          <Route path="/usermanagement"
+          element={
+            <UserManagement/>
+          } />
+
           
 
 

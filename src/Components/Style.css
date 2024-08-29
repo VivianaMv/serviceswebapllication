@@ -249,3 +249,39 @@ a:hover{
 .address-style{
     margin-top: 20px;
 }
+
+.form-signin{
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.services-signup-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-bottom: 50px;
+    margin-top: 20px;
+}
+
+.services-signup-items{
+    display: flex;
+    gap: 10px;
+}
+
+.user-management-page{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 50px;
+    margin-top: 20px;
+}
+
+.user-management-container{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+
+.um-list{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
