@@ -14,16 +14,14 @@ const SignUpOptions = () => {
 
             <h1 className='About'>Joins as a client or as service provider</h1>
             <div className='SignUpOpt' >
-                <h2>Cliente</h2> 
-                <td><button onClick={() => navigate("/signupclient")}>Sign Up here</button> </td>
-            </div>   
-            
-            <div className='SignUpOpt'> 
-                <h2>Service provider</h2>
-                <td><button onClick={() => navigate("/signupprovider")}>Sign Up here</button></td> 
-                </div>
-          
-            
+                <h2 className="signin-title">Client</h2>
+                <button onClick={() => navigate("/signupclient")}>Sign Up here</button>
+            </div>
+
+            <div className='SignUpOpt'>
+                <h2 className="signin-title">Service provider</h2>
+                <button onClick={() => navigate("/signupprovider")}>Sign Up here</button>
+            </div>
 
             <Footer />
         </div>
