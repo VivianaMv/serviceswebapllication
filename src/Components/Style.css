@@ -74,14 +74,14 @@ button{
     padding: 15px 20px;
     cursor: pointer;
     border: none;
-    background-color: #007BFF;
+    background-color: rgb(187, 142, 84);
     color: white;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: rgb(157, 106, 40);
 }
 
 .email-in-use {
@@ -177,6 +177,7 @@ width: 400px;
     align-content: center;
    margin-left: 25%;
     display: inline-block;
+    margin-bottom: 100px;
     }
 /* .form-container {
           
@@ -252,7 +253,8 @@ a:hover{
 
 .form-signin{
     display: grid;
-    grid-template-columns: 1fr;
+    justify-content: center;
+    margin-top: 50px;
 }
 
 .services-signup-container{
@@ -284,4 +286,62 @@ a:hover{
     display: grid;
     align-items: center;
     justify-content: center;
+}
+
+.sign-in-page{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+
+.signin-title{
+    text-align: center;
+    font-weight: 400;
+}
+
+.signup-buttons{
+    display: flex;
+    justify-content: center;
+}
+
+.home-user-page {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.client-info {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.home-user-content {
+    display: flex;
+}
+
+.calendar-container {
+    width: 30%;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+}
+
+.services-table-container {
+    width: 70%;
+    padding: 20px;
+}
+
+.services-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.services-table th, .services-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.services-table th {
+    background-color: #f2f2f2;
 }

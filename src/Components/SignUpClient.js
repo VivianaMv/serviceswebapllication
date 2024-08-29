@@ -22,11 +22,12 @@ const SignUpClient = ({ setUserEmail }) => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
+      // Create user with email and password
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const userId = userCredential.user.uid;
 
-      // Save the user data to the Firebase Realtime Database
-      await set(ref(database, 'users/' + userId), {
+      // Save user data to Firebase Realtime Database
+      await set(ref(database, `users/${userId}`), {
         email,
         firstName,
         lastName,
@@ -36,16 +37,11 @@ const SignUpClient = ({ setUserEmail }) => {
         postalCode
       });
 
-      setUserEmail(userCredential.user.email);
-
-      // Debugging: Check if this line is reached
-      console.log("User signed up successfully. Redirecting to sign-in page...");
-
-      // Redirect to sign-in page after successful sign-up
+      // Set user email and navigate to sign-in page
+      setUserEmail(email);
       navigate('/signin');
     } catch (error) {
       setError(error.message);
-      // Debugging: Log error
       console.error("Sign-up error:", error.message);
     }
   };
@@ -53,9 +49,7 @@ const SignUpClient = ({ setUserEmail }) => {
   return (
     <div className='sign-up-pages'>
       <Header />
-
       <h2 className='client-title'>Sign Up to Hire Services</h2>
-
       <div className='form-container'>
         <form className='client-form' onSubmit={handleSignUp}>
           <label>First Name:</label>
@@ -98,7 +92,7 @@ const SignUpClient = ({ setUserEmail }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <label>Street address:</label>
+          <label>Street Address:</label>
           <input 
             type='text' 
             id='cStreetAddress' 
@@ -158,7 +152,6 @@ const SignUpClient = ({ setUserEmail }) => {
           {error && <p className="error-message">{error}</p>}
         </form>
       </div>
-
       <Footer />
     </div>
   );

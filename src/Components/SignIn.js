@@ -6,7 +6,7 @@ import Footer from './Footer';
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-const SignIn = () => {
+const SignIn = ({ setUserEmail, setIsSignedIn }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -17,6 +17,9 @@ const SignIn = () => {
 
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            setUserEmail(email);
+            setIsSignedIn(true);
+
             if (email === "admin@gmail.com") {
                 navigate('/homeadmin', { state: { email: userCredential.user.email } });
             } else {
@@ -24,6 +27,7 @@ const SignIn = () => {
             }
         } catch (error) {
             setError(error.message);
+            setIsSignedIn(false);
         }
     };
 
@@ -31,7 +35,7 @@ const SignIn = () => {
         <div className="sign-up-pages">
             <Header />
             <div className="form-signin">
-                <h1>Sign In</h1>
+                <h1 className="signin-title">Sign In</h1>
                 <form className="client-form" onSubmit={handleSignin}>
                     <label>Email:</label>
                     <input
