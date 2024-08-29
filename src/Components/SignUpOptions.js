@@ -1,11 +1,14 @@
 import React from 'react'
 import './Style.css';
+import Header from './Header';
+import Footer from './Footer';
 
 
 
 const SignUpOptions = () => {
     return (
         <div >
+            <Header />
 
             <h1 className='About'>Joins as a client or as service provider</h1>
             <div className='SignUpOpt' >
@@ -18,11 +21,9 @@ const SignUpOptions = () => {
                 <td><button>Sign Up here</button></td> 
                 </div>
           
+            
 
-            <a className='Privacy' href='Privacy.js'>Privacy</a>
-
-            <a className='Privacy' href='TermCon.js' target='_blanck'>Terms and conditions</a>
-
+            <Footer />
         </div>
 
 
