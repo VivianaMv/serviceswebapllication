@@ -1,11 +1,14 @@
 import React from 'react'
 import './Style.css';
+import Header from './Header';
 
 
 
 const Contact = () => {
     return (
         <div className='home-container'>
+
+            <Header />
 
             <h1 className='Welcome'>Welcome to EasyHome</h1>
 

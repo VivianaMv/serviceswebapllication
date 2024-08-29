@@ -1,16 +1,20 @@
 import React from "react";
 import './Style.css';
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ email, handleSignOut, isSignedIn }) => {
+
+    const navigate = useNavigate();
+
     return (
         <div className="header-container">
             <div className="Home-title">Easy Home</div>
 
             <div className="nav-links">
-                <a className='nav-item' href='/home'>Home</a>
-                <a className='nav-item' href='/services'>Services</a>
-                <a className='nav-item' href='/about'>About</a>
-                <a className='nav-item' href='/contact'>Contact</a>
+                <a className='nav-item' onClick={() => navigate("/")}>Home</a>
+                <a className='nav-item' onClick={() => navigate("/services")}>Services</a>
+                <a className='nav-item' onClick={() => navigate("/aboutus")}>About</a>
+                <a className='nav-item' onClick={() => navigate("/contact")}>Contact</a>
             </div>
 
             <div className="auth-buttons">
@@ -25,8 +29,8 @@ const Header = ({ email, handleSignOut, isSignedIn }) => {
                         <button className="btnCreate">Sign Up</button>
                     </>
                 )} */}
-                <button className="btnSignIn">Sign In</button>
-                <button className="btnSignIn">Sign Up</button>
+                <button className="btnSignIn" onClick={() => navigate("/signin")}>Sign In</button>
+                <button className="btnSignIn" onClick={() => navigate("/signupoptions")}>Sign Up</button>
             </div>
         </div>
     );
