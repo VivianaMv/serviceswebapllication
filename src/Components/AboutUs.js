@@ -1,6 +1,7 @@
 import React from 'react'
 import './Style.css';
 import Header from './Header';
+import Footer from './Footer';
 
 
 
@@ -15,11 +16,8 @@ const AboutUs = () => {
                 At easyathome we offer our clients and service providers the ease of choosing services that fit their time, budget and basic household needs.</p>
 
                 
-            
+            <Footer />
 
-            <a className='Privacy' href='Privacy.js'>Privacy</a>
-
-            <a className='Privacy' href='TermCon.js' target='_blanck'>Terms and conditions</a>
 
         </div>
 

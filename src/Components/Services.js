@@ -1,16 +1,20 @@
-import React from 'react'
-import './Style.css';
-import Header from './Header';
+import React, { useState } from 'react';
 
+import './Style.css';
+import Header from './Header'; 
+import Footer from './Footer';
+import { useNavigate } from 'react-router-dom';
 
 
 const Services = () => {
+
+    const navigate = useNavigate();
     return (
         <div className='home-container'>
 
             <Header />
 
-            <h2 className='descrip-home'>Our Services</h2>
+            <h1 className='Our-Services'>Our Services</h1>
 
             <div >
                 <table  >
@@ -27,7 +31,8 @@ const Services = () => {
                             * Cost of service per hour $21 dollars including taxes. <br></br>
                             * Cost of service per hour $21 dollars including taxes. <br></br>
                             *Cash payment method once the service is finished. <br></br><br></br>
-                            <button className='btnBook'>Book services</button>
+                            <button onClick={() => navigate("/signupclient")}>Book services</button>
+                           
                         </td>
                     </tr>
                 </table>
@@ -48,7 +53,7 @@ const Services = () => {
                             * Cost of service per hour $21 dollars including taxes. <br></br>
                             * Cost of service per hour $21 dollars including taxes. <br></br>
                             *Cash payment method once the service is finished. <br></br><br></br>
-                            <button className='btnBook'>Book services</button>
+                            <button onClick={() => navigate("/signupclient")}>Book services</button>
                         </td>
                     </tr>
 
@@ -68,16 +73,13 @@ const Services = () => {
                             * Cost of service per hour $21 dollars including taxes. <br></br>
                             * Cost of service per hour $21 dollars including taxes. <br></br>
                             *Cash payment method once the service is finished. <br></br><br></br>
-                            <button >Book services</button>
+                            <button onClick={() => navigate("/signupclient")}>Book services</button>
                         </td>
                     </tr>
                 </table>
             </div>
 
-            <a className='Privacy' href='Privacy.js'>Privacy</a>
-
-            <a className='Privacy' href='TermCon.js' target='_blanck'>Terms and conditions</a>
-
+            <Footer />
         </div>
 
 

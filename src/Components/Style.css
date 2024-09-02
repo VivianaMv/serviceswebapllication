@@ -30,11 +30,16 @@ body{
 }
 
 .descrip-home {
-    font-size: 16px;
-    line-height: 1.5;
-    padding: 50px 150px;
+
+
+    padding: 10px 100px;
     text-align: justify;
 }
+.Our-Services{
+    text-align: center;
+
+}
+
 
 .Home-title{
     font-size: xx-large;
@@ -112,9 +117,9 @@ button:hover {
 
 
 .descrip-home{
-    margin-left: 300px;
-    margin-right: 200px;
+
     font-size: x-large;
+    text-align: center;
     
 }
 
@@ -127,12 +132,6 @@ button:hover {
 
 .logo-home-title{
     text-align: center;
-}
-
-.PrivacyPage {
-
-    margin-left: 30%;
-    font-size: x-large;
 }
 
 
@@ -153,10 +152,12 @@ button:hover {
   
 }
 
-.About{
+.About,
+.Privacy,
+.Term{
 
     text-align: center;
-    margin-top: 10%;
+    
   
 }
 .form{
@@ -173,12 +174,17 @@ width: 400px;
 .Welcome{
     text-align: center;
 }
-.SignUpOpt{
-    align-content: center;
-   margin-left: 25%;
-    display: inline-block;
-    margin-bottom: 100px;
-    }
+
+.SignUpOpt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    
+}
+
+
 /* .form-container {
           
             padding: 20px;
@@ -344,4 +350,17 @@ a:hover{
 
 .services-table th {
     background-color: #f2f2f2;
+}
+.footer{
+    font-size: large;
+    padding: 15px 20px;
+    cursor: pointer;
+    border: none;
+    color:green;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: rgb(157, 106, 40);
 }
