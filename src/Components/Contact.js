@@ -1,6 +1,7 @@
 import React from 'react'
 import './Style.css';
 import Header from './Header';
+import Footer from './Footer';
 
 
 
@@ -50,11 +51,8 @@ const Contact = () => {
             </form>
            
           
-
-            <a className='Privacy' href='Privacy.js'>Privacy</a>
-
-            <a className='Privacy' href='TermCon.js' target='_blanck'>Terms and conditions</a>
-
+            <Footer />
+           
         </div>
 
 
