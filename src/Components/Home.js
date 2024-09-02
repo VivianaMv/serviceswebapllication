@@ -6,6 +6,8 @@ import Header from './Header';
 
 
 const Home = () => {
+
+
     return (
         <div className='home-container'>
             <Header/>
@@ -21,6 +23,7 @@ const Home = () => {
                     <img
                         src={require('../images/house-cleaning.jpg')}
                         alt='cleaning logo' />
+                 
                     <p className='logo-home-title'>Cleaning</p>
                 </div>
                 <div>
