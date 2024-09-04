@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import './Style.css';
 import Header from './Header';
@@ -6,19 +7,31 @@ import Footer from './Footer';
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-const SignIn = ({ setUserEmail, setIsSignedIn }) => {
+
+import { ref, get } from 'firebase/database';
+import { database } from '../firebase';
+
+const SignIn = ({ setUserEmail }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const [error, setError] = useState(null);
 
+
     const handleSignin = async (e) => {
         e.preventDefault();
 
+        const bannedUserRef = ref(database, 'bannedUsers/' + email.replace('.', '_'));
+        const bannedUserSnapshot = await get(bannedUserRef);
+
+        if (bannedUserSnapshot.exists()) {
+            setError("This email is banned.");
+            return;
+        }
+
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            setUserEmail(email);
-            setIsSignedIn(true);
+            setUserEmail(userCredential.user.email);
 
             if (email === "admin@gmail.com") {
                 navigate('/homeadmin', { state: { email: userCredential.user.email } });
@@ -27,9 +40,13 @@ const SignIn = ({ setUserEmail, setIsSignedIn }) => {
             }
         } catch (error) {
             setError(error.message);
-            setIsSignedIn(false);
         }
     };
+
+    const handleReset = () => {
+        navigate('/reset');
+
+    }
 
     return (
         <div className="sign-up-pages">
@@ -66,5 +83,6 @@ const SignIn = ({ setUserEmail, setIsSignedIn }) => {
         </div>
     );
 };
+        
 
-export default SignIn;
+
