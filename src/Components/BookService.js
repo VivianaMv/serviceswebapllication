@@ -6,7 +6,7 @@ import { ref, push } from 'firebase/database';
 import { database } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
-const BookService = ({ userEmail }) => {
+const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
     const [serviceType, setServiceType] = useState('');
     const [serviceDate, setServiceDate] = useState('');
     const [serviceTime, setServiceTime] = useState('');
@@ -32,9 +32,19 @@ const BookService = ({ userEmail }) => {
         }
     };
 
+    const handleSignOut = () => {
+        setUserEmail("");
+        setIsSignedIn(false);
+        navigate('/');
+    };
+
     return (
         <div className='book-service-page'>
-            <Header />
+            <Header 
+                userEmail={userEmail} 
+                handleSignOut={handleSignOut}
+                isSignedIn={isSignedIn} 
+            />
             <div className='form-container'>
                 <h2>Book a Service</h2>
                 <form className='client-form' onSubmit={handleServiceBooking}>

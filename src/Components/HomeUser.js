@@ -4,12 +4,13 @@ import Header from './Header';
 import Footer from './Footer';
 import { ref, get } from 'firebase/database'; 
 import { database } from '../firebase';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const HomeUser = ({ userEmail, isSignedIn }) => {
+const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
     const [clientName, setClientName] = useState('');
     const [services, setServices] = useState([]);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (userEmail) {
@@ -20,7 +21,7 @@ const HomeUser = ({ userEmail, isSignedIn }) => {
 
     const fetchClientName = async () => {
         try {
-            const userId = userEmail.replace('.', '_'); // This should match how you save the data
+            const userId = userEmail.replace('.', '_'); 
             const snapshot = await get(ref(database, `users/${userId}`));
             if (snapshot.exists()) {
                 const data = snapshot.val();
@@ -35,7 +36,7 @@ const HomeUser = ({ userEmail, isSignedIn }) => {
 
     const fetchBookedServices = async () => {
         try {
-            const userId = userEmail.replace('.', '_'); // This should match how you save the data
+            const userId = userEmail.replace('.', '_');
             const snapshot = await get(ref(database, `services/${userId}`));
             if (snapshot.exists()) {
                 const servicesList = [];
@@ -49,12 +50,24 @@ const HomeUser = ({ userEmail, isSignedIn }) => {
         }
     };
 
+    const handleSignOut = () => {
+        setUserEmail("");
+        setIsSignedIn(false);
+        navigate('/');
+    };
+
     return (
         <div>
-            <Header />
+            <Header 
+                userEmail={userEmail} 
+                handleSignOut={handleSignOut}
+                isSignedIn={isSignedIn} 
+            />
             <div className="home-user-page">
                 <div className="client-info">
-                    <h3>Welcome, {clientName}</h3>
+                    <h3>Welcome, {clientName || "Guest"}</h3>
+                    <div className="email-in-use">{userEmail}</div>
+                    {error && <p className="error">{error}</p>}
                 </div>
                 <div className="home-user-content">
                     <div className="calendar-container">
@@ -90,7 +103,6 @@ const HomeUser = ({ userEmail, isSignedIn }) => {
                     </div>
                 </div>
             </div>
-            {error && <p className="error-message">{error}</p>}
             <Footer />
         </div>
     );

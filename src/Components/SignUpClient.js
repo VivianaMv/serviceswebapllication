@@ -22,11 +22,9 @@ const SignUpClient = ({ setUserEmail }) => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      // Create user with email and password
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const userId = userCredential.user.uid;
 
-      // Save user data to Firebase Realtime Database
       await set(ref(database, `users/${userId}`), {
         email,
         firstName,
@@ -37,7 +35,6 @@ const SignUpClient = ({ setUserEmail }) => {
         postalCode
       });
 
-      // Set user email and navigate to sign-in page
       setUserEmail(email);
       navigate('/signin');
     } catch (error) {
@@ -48,74 +45,74 @@ const SignUpClient = ({ setUserEmail }) => {
 
   return (
     <div className='sign-up-pages'>
-      <Header />
+      <Header/>
       <h2 className='client-title'>Sign Up to Hire Services</h2>
       <div className='form-container'>
         <form className='client-form' onSubmit={handleSignUp}>
           <label>First Name:</label>
-          <input 
-            type="text" 
-            id="cFirstName" 
-            className='input-client-form' 
+          <input
+            type="text"
+            id="cFirstName"
+            className='input-client-form'
             required
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
 
           <label>Last Name:</label>
-          <input 
-            type="text" 
-            id="cLastName" 
-            className='input-client-form' 
+          <input
+            type="text"
+            id="cLastName"
+            className='input-client-form'
             required
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
 
           <label>Email:</label>
-          <input 
-            type="email" 
-            id="cEmail" 
-            className='input-client-form' 
+          <input
+            type="email"
+            id="cEmail"
+            className='input-client-form'
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
 
           <label>Password:</label>
-          <input 
-            type="password" 
-            id="cPassword" 
-            className='input-client-form' 
+          <input
+            type="password"
+            id="cPassword"
+            className='input-client-form'
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
 
           <label>Street Address:</label>
-          <input 
-            type='text' 
-            id='cStreetAddress' 
-            className='input-client-form' 
+          <input
+            type='text'
+            id='cStreetAddress'
+            className='input-client-form'
             required
             value={streetAddress}
             onChange={(e) => setStreetAddress(e.target.value)}
           />
 
           <label>City:</label>
-          <input 
-            type='text' 
-            id='cCityAddress' 
-            className='input-client-form' 
+          <input
+            type='text'
+            id='cCityAddress'
+            className='input-client-form'
             required
             value={city}
             onChange={(e) => setCity(e.target.value)}
           />
 
           <label>Province:</label>
-          <select 
-            id='cProvince' 
-            className='input-client-form' 
+          <select
+            id='cProvince'
+            className='input-client-form'
             required
             value={province}
             onChange={(e) => setProvince(e.target.value)}
@@ -137,10 +134,10 @@ const SignUpClient = ({ setUserEmail }) => {
           </select>
 
           <label>Postal Code:</label>
-          <input 
-            type='text' 
-            id='cPostalCode' 
-            className='input-client-form' 
+          <input
+            type='text'
+            id='cPostalCode'
+            className='input-client-form'
             required
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}

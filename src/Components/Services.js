@@ -1,18 +1,28 @@
 import React, { useState } from 'react';
 
 import './Style.css';
-import Header from './Header'; 
+import Header from './Header';
 import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
 
 
-const Services = () => {
+const Services = ({userEmail, isSignedIn, setUserEmail, setIsSignedIn}) => {
 
     const navigate = useNavigate();
+
+    const handleSignOut = () => {
+        setUserEmail("");
+        setIsSignedIn(false);
+        navigate('/');
+    };
     return (
         <div className='home-container'>
 
-            <Header />
+            <Header
+                userEmail={userEmail}
+                handleSignOut={handleSignOut}
+                isSignedIn={isSignedIn}
+            />
 
             <h1 className='Our-Services'>Our Services</h1>
 
@@ -32,7 +42,7 @@ const Services = () => {
                             * Cost of service per hour $21 dollars including taxes. <br></br>
                             *Cash payment method once the service is finished. <br></br><br></br>
                             <button onClick={() => navigate("/signupclient")}>Book services</button>
-                           
+
                         </td>
                     </tr>
                 </table>
