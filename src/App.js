@@ -14,6 +14,7 @@ import SignUpOptions from './Components/SignUpOptions';
 import SignIn from './Components/SignIn';
 import SignUpProvider from './Components/SignUpProvider';
 import HomeUser from './Components/HomeUser';
+import HomeProvider from './Components/HomeProvider';
 import UserManagement from './Components/UserManagement';
 import BookService from './Components/BookService';
 
@@ -49,13 +50,22 @@ function App() {
         <Route path="/services" element={<Services isSignedIn={isSignedIn} />} />
         <Route path="/contact" element={<Contact isSignedIn={isSignedIn} />} />
         <Route path="/signin" element={<SignIn setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} />
+       
         <Route 
           path="/homeuser" 
           element={isSignedIn ? <HomeUser userEmail={userEmail} isSignedIn={isSignedIn} /> : <Navigate to="/signin" />} 
         />
-        <Route 
+        <Route
+          path="/homeprovider"
+          element={isSignedIn ? <HomeUser userEmail={userEmail} isSignedIn={isSignedIn} /> : <Navigate to="/signin" />}
+        />
+        {/* <Route 
           path="/usermanagement" 
           element={isSignedIn ? <UserManagement isSignedIn={isSignedIn} /> : <Navigate to="/signin" />} 
+        /> */}
+        <Route
+          path="/usermanagement"
+          element={<UserManagement isSignedIn={isSignedIn} />}
         />
         <Route 
           path="/bookservice" 

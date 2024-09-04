@@ -29,11 +29,12 @@ body{
     height: auto;
 }
 
-.descrip-home {
+.des-home {
 
 
     padding: 10px 100px;
     text-align: justify;
+    font-size: x-large;
 }
 .Our-Services{
     text-align: center;
@@ -273,6 +274,9 @@ a:hover{
 .services-signup-items{
     display: flex;
     gap: 10px;
+}
+.Sign-up-here{
+    text-align: center;
 }
 
 .user-management-page{
