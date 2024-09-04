@@ -35,9 +35,9 @@ const SignIn = ({ setUserEmail }) => {
 
             if (email === "admin@gmail.com") {
                 navigate('/homeadmin', { state: { email: userCredential.user.email } });
-            } else {
-                navigate('/homeuser', { state: { email: userCredential.user.email } });
-            }
+            } else if (email === "/signupprovider"){
+                navigate('/homeprovider', { state: { email: userCredential.user.email } });
+            } 
         } catch (error) {
             setError(error.message);
         }
@@ -74,15 +74,16 @@ const SignIn = ({ setUserEmail }) => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
 
-                    <button type="submit">Login</button>
+                    <button type="submit">Login</button><br></br><br></br>
                 </form>
                 {error && <p className="error-message">{error}</p>}
-                <p onClick={() => navigate("/signup")} className="link-btn">You don't have an account? Sign up here</p>
+                <p className="Sign-up-here">You don't have an account? Sign up here</p>
+                <button onClick={() => navigate("/signupoptions")} type="submit">Sign Up </button>
             </div>
             <Footer />
         </div>
     );
 };
         
-
+export default SignIn;
 
