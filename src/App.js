@@ -10,11 +10,16 @@ import AboutUs from './Components/AboutUs';
 import Contact from './Components/Contact';
 import SignUpClient from './Components/SignUpClient';
 import SignUpOptions from './Components/SignUpOptions';
+<<<<<<< Updated upstream
 import SignIn from './Components/SignIn';
 import SignUpProvider from './Components/SignUpProvider';
 import HomeUser from './Components/HomeUser';
 import UserManagement from './Components/UserManagement';
 import BookService from './Components/BookService';
+=======
+// import SignIn from './Components/SignIn';
+
+>>>>>>> Stashed changes
 
 function App() {
   const [userEmail, setUserEmail] = useState("");
