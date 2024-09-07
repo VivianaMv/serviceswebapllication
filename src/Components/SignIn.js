@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import './Style.css';
 import Header from './Header';
@@ -6,30 +7,46 @@ import Footer from './Footer';
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-const SignIn = ({ setUserEmail, setIsSignedIn }) => {
+
+import { ref, get } from 'firebase/database';
+import { database } from '../firebase';
+
+const SignIn = ({ setUserEmail }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const [error, setError] = useState(null);
 
+
     const handleSignin = async (e) => {
         e.preventDefault();
 
+        const bannedUserRef = ref(database, 'bannedUsers/' + email.replace('.', '_'));
+        const bannedUserSnapshot = await get(bannedUserRef);
+
+        if (bannedUserSnapshot.exists()) {
+            setError("This email is banned.");
+            return;
+        }
+
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            setUserEmail(email);
-            setIsSignedIn(true);
+            setUserEmail(userCredential.user.email);
 
             if (email === "admin@gmail.com") {
                 navigate('/homeadmin', { state: { email: userCredential.user.email } });
-            } else {
-                navigate('/homeuser', { state: { email: userCredential.user.email } });
-            }
+            } else if (email === "/signupprovider"){
+                navigate('/homeprovider', { state: { email: userCredential.user.email } });
+            } 
         } catch (error) {
             setError(error.message);
-            setIsSignedIn(false);
         }
     };
+
+    const handleReset = () => {
+        navigate('/reset');
+
+    }
 
     return (
         <div className="sign-up-pages">
@@ -57,14 +74,16 @@ const SignIn = ({ setUserEmail, setIsSignedIn }) => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
 
-                    <button type="submit">Login</button>
+                    <button type="submit">Login</button><br></br><br></br>
                 </form>
                 {error && <p className="error-message">{error}</p>}
-                <p onClick={() => navigate("/signup")} className="link-btn">You don't have an account? Sign up here</p>
+                <p className="Sign-up-here">You don't have an account? Sign up here</p>
+                <button onClick={() => navigate("/signupoptions")} type="submit">Sign Up </button>
             </div>
             <Footer />
         </div>
     );
 };
-
+        
 export default SignIn;
+

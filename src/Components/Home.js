@@ -3,21 +3,23 @@ import './Style.css';
 import logo from '../images/logo-home.jpg';
 import Footer from './Footer';
 import Header from './Header';
+import { useNavigate } from 'react-router-dom';
 
 const Home = ({ userEmail, isSignedIn, handleSignOut }) => {
 
 
+const Home = () => {
 
 
-    
+    const navigate = useNavigate();
     return (
         <div className='home-container'>
-            {/* Pass the required props correctly to Header */}
             <Header 
                 email={userEmail} 
                 isSignedIn={isSignedIn} 
             />
             <table className='home-table'>
+
                 <tbody>
                     <tr>
                         <td><img src={logo} alt="Logo" className="logo-home" /></td>
@@ -31,19 +33,22 @@ const Home = ({ userEmail, isSignedIn, handleSignOut }) => {
                     </tr>
                 </tbody>
             </table>
-
+            
             <div className='home-logos'>
-                <div>
-                    <img src={require('../images/house-cleaning.jpg')} alt='cleaning logo' />
-                    <p className='logo-home-title'>Cleaning</p>
+                <div >
+                    <img
+                        src={require('../images/house-cleaning.jpg')} alt='cleaning logo' onClick={() => navigate("/services")}/>
+                        <p className='logo-home-title'>Cleaning</p>
                 </div>
                 <div>
-                    <img src={require('../images/gardening.jpg')} alt='gardening logo' />
-                    <p className='logo-home-title'>Gardening</p>
+                    <img
+                        src={require('../images/gardening.jpg')} alt='gardening logo' onClick={() => navigate("/services")} />
+                        <p className='logo-home-title'>Gardening</p>
                 </div>
                 <div>
-                    <img src={require('../images/painting.jpg')} alt='painting logo' />
-                    <p className='logo-home-title'>Painting</p>
+                    <img
+                        src={require('../images/painting.jpg')} alt='painting logo' onClick={() => navigate("/services")} />
+                        <p className='logo-home-title'>Painting</p>
                 </div>
             </div>
             

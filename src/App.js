@@ -9,11 +9,14 @@ import AboutUs from './Components/AboutUs';
 import Contact from './Components/Contact';
 import SignUpClient from './Components/SignUpClient';
 import SignUpOptions from './Components/SignUpOptions';
+
 import SignIn from './Components/SignIn';
 import SignUpProvider from './Components/SignUpProvider';
 import HomeUser from './Components/HomeUser';
+import HomeProvider from './Components/HomeProvider';
 import UserManagement from './Components/UserManagement';
 import BookService from './Components/BookService';
+
 
 function App() {
   const [userEmail, setUserEmail] = useState("");
@@ -36,10 +39,12 @@ function App() {
         <Route path="/services" element={<Services userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} />
         <Route path="/contact" element={<Contact userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} />
         <Route path="/signin" element={<SignIn setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} />
+       
         <Route 
           path="/homeuser" 
           element={isSignedIn ? <HomeUser userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />} 
         />
+
         {/* <Route 
           path="/usermanagement" 
           element={isSignedIn && userEmail=== "admin@gmail.com" ? <UserManagement userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />} 
@@ -47,7 +52,10 @@ function App() {
         <Route 
           path="/usermanagement" 
           element={<UserManagement userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} 
-        />
+        <Route
+          path="/homeprovider"
+          element={isSignedIn ? <HomeUser userEmail={userEmail} isSignedIn={isSignedIn} /> : <Navigate to="/signin" />}
+        />     
         <Route 
           path="/bookservice" 
           element={isSignedIn ? <BookService userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />} 
