@@ -7,14 +7,20 @@ import Footer from './Footer';
 
 const UserManagement = () => {
     const [pendingProviders, setPendingProviders] = useState([]);
+    const [approvedProviders, setApprovedProviders] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
     const [rejectedProviders, setRejectedProviders] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
-    const [status, setStatus] = useState('not_banned');
+    const [selectedProvider, setSelectedProvider] = useState(null);
+    const [userStatus, setUserStatus] = useState('');
+    const [providerStatus, setProviderStatus] = useState('');
     const [error, setError] = useState(null);
+    const [email, setEmail] = useState('admin@gmail.com'); // Example, replace with actual email retrieval logic
+    const [isSignedIn, setIsSignedIn] = useState(true); // Example, replace with actual sign-in status
 
     useEffect(() => {
         fetchPendingProviders();
+        fetchApprovedProviders();
         fetchAllUsers();
         fetchRejectedProviders();
     }, []);
@@ -28,6 +34,21 @@ const UserManagement = () => {
                     providers.push({ id: childSnapshot.key, ...childSnapshot.val() });
                 });
                 setPendingProviders(providers);
+            }
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
+    const fetchApprovedProviders = async () => {
+        try {
+            const snapshot = await get(ref(database, 'approvedProviders'));
+            if (snapshot.exists()) {
+                const providers = [];
+                snapshot.forEach(childSnapshot => {
+                    providers.push({ id: childSnapshot.key, ...childSnapshot.val() });
+                });
+                setApprovedProviders(providers);
             }
         } catch (error) {
             setError(error.message);
@@ -70,11 +91,14 @@ const UserManagement = () => {
             const providerSnapshot = await get(providerRef);
             const providerData = providerSnapshot.val();
 
-            await set(ref(database, `users/${providerId}`), providerData);
+            // Move provider to 'approvedProviders' with default 'not_banned' status
+            await set(ref(database, `approvedProviders/${providerId}`), { ...providerData, status: 'not_banned' });
+
+            // Remove from 'pendingProviders'
             await remove(providerRef);
 
             fetchPendingProviders();
-            fetchAllUsers();
+            fetchApprovedProviders();
         } catch (error) {
             setError(error.message);
         }
@@ -96,10 +120,10 @@ const UserManagement = () => {
         }
     };
 
-    const handleBanStatusChange = async () => {
+    const handleUserBanStatusChange = async () => {
         try {
             if (selectedUser) {
-                await update(ref(database, `users/${selectedUser}`), { status });
+                await update(ref(database, `users/${selectedUser}`), { status: userStatus });
                 setSelectedUser(null);
                 fetchAllUsers();
             }
@@ -108,9 +132,21 @@ const UserManagement = () => {
         }
     };
 
+    const handleProviderBanStatusChange = async () => {
+        try {
+            if (selectedProvider) {
+                await update(ref(database, `approvedProviders/${selectedProvider}`), { status: providerStatus });
+                setSelectedProvider(null);
+                fetchApprovedProviders();
+            }
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
     return (
         <div>
-            <Header />
+            <Header email={email} handleSignOut={() => setIsSignedIn(false)} isSignedIn={isSignedIn} />
             <div className='user-management-page'>
                 <div className='user-management-container'>
                     <h2>Manage Pending Providers</h2>
@@ -121,8 +157,10 @@ const UserManagement = () => {
                                 <div key={provider.id} className='provider-item'>
                                     <p>Storefront Name: {provider.storeName}</p>
                                     <p>Email: {provider.email}</p>
-                                    <button onClick={() => handleApprove(provider.id)}>Approve</button>
-                                    <button onClick={() => handleNotApprove(provider.id)}>Not Approve</button>
+                                    <div className='provider-actions'>
+                                        <button onClick={() => handleApprove(provider.id)}>Approve</button>
+                                        <button onClick={() => handleNotApprove(provider.id)}>Not Approve</button>
+                                    </div>
                                 </div>
                             ))
                         ) : (
@@ -132,30 +170,68 @@ const UserManagement = () => {
                 </div>
 
                 <div className='user-management-container'>
+                    <h2>Approved Providers</h2>
+                    <div className='um-list'>
+                        {approvedProviders.length > 0 ? (
+                            approvedProviders.map(provider => (
+                                <div key={provider.id} className='provider-item'>
+                                    <p>Storefront Name: {provider.storeName}</p>
+                                    <p>Email: {provider.email}</p>
+                                    <input
+                                        type="radio"
+                                        name={`status-provider-${provider.id}`}
+                                        value="banned"
+                                        checked={provider.status === 'banned'}
+                                        onChange={() => {
+                                            setSelectedProvider(provider.id);
+                                            setProviderStatus('banned');
+                                        }}
+                                    /> Banned
+                                    <input
+                                        type="radio"
+                                        name={`status-provider-${provider.id}`}
+                                        value="not_banned"
+                                        checked={provider.status === 'not_banned'}
+                                        onChange={() => {
+                                            setSelectedProvider(provider.id);
+                                            setProviderStatus('not_banned');
+                                        }}
+                                    /> Not Banned
+                                </div>
+                            ))
+                        ) : (
+                            <p>No approved providers.</p>
+                        )}
+                    </div>
+                    <button onClick={handleProviderBanStatusChange}>Update Provider Status</button>
+                </div>
+
+                <div className='user-management-container'>
                     <h2>Manage User Status</h2>
                     <div className='um-list'>
                         {allUsers.length > 0 ? (
                             allUsers.map(user => (
                                 <div key={user.id} className='user-item'>
+                                    <p>Name: {user.firstName + " " + user.lastName}</p>
                                     <p>Email: {user.email}</p>
                                     <input
                                         type="radio"
-                                        name={`status-${user.id}`}
+                                        name={`status-user-${user.id}`}
                                         value="banned"
                                         checked={user.status === 'banned'}
                                         onChange={() => {
                                             setSelectedUser(user.id);
-                                            setStatus('banned');
+                                            setUserStatus('banned');
                                         }}
                                     /> Banned
                                     <input
                                         type="radio"
-                                        name={`status-${user.id}`}
+                                        name={`status-user-${user.id}`}
                                         value="not_banned"
                                         checked={user.status === 'not_banned'}
                                         onChange={() => {
                                             setSelectedUser(user.id);
-                                            setStatus('not_banned');
+                                            setUserStatus('not_banned');
                                         }}
                                     /> Not Banned
                                 </div>
@@ -164,7 +240,7 @@ const UserManagement = () => {
                             <p>No users found.</p>
                         )}
                     </div>
-                    <button onClick={handleBanStatusChange}>Update Status</button>
+                    <button onClick={handleUserBanStatusChange}>Update User Status</button>
                 </div>
 
                 <div className='user-management-container'>

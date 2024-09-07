@@ -32,7 +32,8 @@ const SignUpClient = ({ setUserEmail }) => {
         streetAddress,
         city,
         province,
-        postalCode
+        postalCode,
+        status: 'not_banned'  // Set the default status to 'not_banned'
       });
 
       setUserEmail(email);

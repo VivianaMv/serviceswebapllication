@@ -40,9 +40,13 @@ function App() {
           path="/homeuser" 
           element={isSignedIn ? <HomeUser userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />} 
         />
-        <Route 
+        {/* <Route 
           path="/usermanagement" 
           element={isSignedIn && userEmail=== "admin@gmail.com" ? <UserManagement userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />} 
+        /> */}
+        <Route 
+          path="/usermanagement" 
+          element={<UserManagement userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} 
         />
         <Route 
           path="/bookservice" 
