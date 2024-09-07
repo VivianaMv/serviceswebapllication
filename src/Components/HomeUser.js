@@ -36,6 +36,7 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
             setError(error.message);
         }
     };
+    
 
     const fetchAllUsers = async () => {
         try {

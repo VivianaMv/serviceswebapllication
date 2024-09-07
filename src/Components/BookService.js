@@ -4,7 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 import { ref, push } from 'firebase/database';
 import { database } from '../firebase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
     const [serviceType, setServiceType] = useState('');
@@ -12,25 +12,45 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
     const [serviceTime, setServiceTime] = useState('');
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const { providerEmail } = location.state || {};
 
     const handleServiceBooking = async (e) => {
         e.preventDefault();
-
+    
+        const userId = userEmail.replace('.', '_');
+        const providerId = providerEmail.replace('.', '_');
+    
         try {
-            const newServiceRef = push(ref(database, `services/${userEmail.replace('.', '_')}`));
-            await newServiceRef.set({
+            const userServiceRef = ref(database, `services/${userId}`);
+            const providerServiceRef = ref(database, `providerServices/${providerId}`);
+    
+            await push(userServiceRef).set({
                 name: serviceType,
                 date: serviceDate,
                 time: serviceTime,
-                status: 'Booked'
+                status: 'Booked',
+                providerEmail
             });
-
+    
+            await push(providerServiceRef).set({
+                name: serviceType,
+                date: serviceDate,
+                time: serviceTime,
+                status: 'Booked',
+                clientEmail: userEmail
+            });
+    
             alert('Service booked successfully!');
-            navigate('/homeuser'); 
+            navigate('/homeuser');
         } catch (error) {
             setError('Error booking service: ' + error.message);
         }
     };
+    
+    
+    
 
     const handleSignOut = () => {
         setUserEmail("");
@@ -46,7 +66,7 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
                 isSignedIn={isSignedIn} 
             />
             <div className='form-container'>
-                <h2>Book a Service</h2>
+                <h2>Book a Service with {providerEmail}</h2>
                 <form className='client-form' onSubmit={handleServiceBooking}>
                     <label>Service Type:</label>
                     <select value={serviceType} onChange={(e) => setServiceType(e.target.value)} required>
