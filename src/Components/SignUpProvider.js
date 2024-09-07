@@ -26,9 +26,9 @@ const SignUpProvider = () => {
         e.preventDefault();
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const userId = userCredential.user.uid;
+            const providerId = userCredential.user.uid;
 
-            await set(ref(database, 'pendingProviders/' + userId), {
+            await set(ref(database, 'pendingProviders/' + providerId), {
                 storeName,
                 email,
                 services
