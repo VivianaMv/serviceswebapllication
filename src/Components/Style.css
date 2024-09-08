@@ -173,7 +173,8 @@ width: 400px;
     width: 150px;
     display: inline-block;
  }   
-.Welcome{
+.Welcome,
+.Book-serv{
     text-align: center;
 }
 
@@ -276,7 +277,9 @@ a:hover{
     display: flex;
     gap: 10px;
 }
-.Sign-up-here{
+.Sign-up-here,
+.Forgot-Password,
+.Password{
     text-align: center;
 }
 
@@ -324,6 +327,7 @@ a:hover{
 .client-info {
     text-align: right;
     margin-bottom: 20px;
+    margin-right: 50%;
 }
 
 .home-user-content {
@@ -336,6 +340,7 @@ a:hover{
     width: 30%;
     padding: 20px;
     border-right: 1px solid #ccc;
+    margin-left:300px;
 }
 
 .services-table-container {
@@ -398,4 +403,16 @@ button:hover {
     padding: 10px;
     border-bottom: 1px solid gray;
 }
+.Password{
+    font-size: large;
+        padding: 15px 20px;
+        cursor: pointer;
+        border: none;
+        color: green;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+
+
+}
+
 

@@ -86,7 +86,7 @@ const SignIn = ({ setUserEmail }) => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
 
-                    <p onClick={handleReset}>Reset password</p>
+                    <p className="Password" onClick={handleReset} >Forgot password?</p>
 
                     <button type="submit">Login</button><br /><br />
                 </form>
