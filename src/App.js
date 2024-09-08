@@ -52,10 +52,11 @@ function App() {
         <Route 
           path="/usermanagement" 
           element={<UserManagement userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} 
+        />
         <Route
           path="/homeprovider"
-          element={isSignedIn ? <HomeUser userEmail={userEmail} isSignedIn={isSignedIn} /> : <Navigate to="/signin" />}
-        />     
+          element={isSignedIn ? <HomeProvider userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />}
+        />         
         <Route 
           path="/bookservice" 
           element={isSignedIn ? <BookService userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />} 
