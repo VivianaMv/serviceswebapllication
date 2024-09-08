@@ -95,17 +95,17 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
             />
             <div className="home-user-page">
                 <div className="client-info">
-                    <h3>Welcome, {clientName}</h3>
+                    <h1>Welcome! {clientName}</h1>
                 </div>
-
+              
                 <div className="home-user-content">
                     <div className="calendar-container">
-                        <h4>Upcoming Services Calendar</h4>
+                        <h3>Upcoming Services Calendar</h3>
                         {/* Add your calendar component here */}
                     </div>
 
                     <div className="services-table-container">
-                        <h4>Your Booked Services</h4>
+                        <h3>Your Booked Services</h3>
                         {services.length > 0 ? (
                             <table className="services-table">
                                 <thead>
@@ -133,7 +133,7 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
                     </div>
                 </div>
 
-                <div className='available-services'>
+                <div className='available-services'><br></br><br></br>
                     <h2>Book a service with one of our providers</h2>
                     {approvedProviders.length > 0 ? (
                         <table className="providers-table">

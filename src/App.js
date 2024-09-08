@@ -16,6 +16,7 @@ import HomeUser from './Components/HomeUser';
 import HomeProvider from './Components/HomeProvider';
 import UserManagement from './Components/UserManagement';
 import BookService from './Components/BookService';
+import ForgotPassword from './Components/ForgotPassword';
 
 
 function App() {
@@ -61,6 +62,12 @@ function App() {
           path="/bookservice" 
           element={isSignedIn ? <BookService userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />} 
         />
+        <Route
+          path="/reset"
+          element={
+            <ForgotPassword
+            />}
+            />
       </Routes>
     </Router>
   );
