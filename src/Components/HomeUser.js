@@ -134,7 +134,7 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
                 </div>
 
                 <div className='available-services'>
-                    <h1>Approved Providers</h1>
+                    <h2>Book a service with one of our providers</h2>
                     {approvedProviders.length > 0 ? (
                         <table className="providers-table">
                             <thead>

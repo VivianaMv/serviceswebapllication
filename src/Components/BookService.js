@@ -14,18 +14,26 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { providerEmail } = location.state || {};
+    // Extract providerEmail from state with a fallback to an empty string
+    const { providerEmail = '' } = location.state || {};
 
     const handleServiceBooking = async (e) => {
         e.preventDefault();
-    
-        const userId = userEmail.replace('.', '_');
-        const providerId = providerEmail.replace('.', '_');
-    
+
+        if (!userEmail) {
+            setError('User email is not defined.');
+        } else if (!providerEmail) {
+            setError('Provider email is not defined.');
+
+        }
+
+        const userId = userEmail.replace(/\./g, '_');
+        const providerId = providerEmail.replace(/\./g, '_');
+
         try {
             const userServiceRef = ref(database, `services/${userId}`);
             const providerServiceRef = ref(database, `providerServices/${providerId}`);
-    
+
             await push(userServiceRef).set({
                 name: serviceType,
                 date: serviceDate,
@@ -33,7 +41,7 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
                 status: 'Booked',
                 providerEmail
             });
-    
+
             await push(providerServiceRef).set({
                 name: serviceType,
                 date: serviceDate,
@@ -41,16 +49,13 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
                 status: 'Booked',
                 clientEmail: userEmail
             });
-    
+
             alert('Service booked successfully!');
             navigate('/homeuser');
         } catch (error) {
             setError('Error booking service: ' + error.message);
         }
     };
-    
-    
-    
 
     const handleSignOut = () => {
         setUserEmail("");
@@ -60,10 +65,10 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
 
     return (
         <div className='book-service-page'>
-            <Header 
-                userEmail={userEmail} 
+            <Header
+                userEmail={userEmail}
                 handleSignOut={handleSignOut}
-                isSignedIn={isSignedIn} 
+                isSignedIn={isSignedIn}
             />
             <div className='form-container'>
                 <h2>Book a Service with {providerEmail}</h2>
