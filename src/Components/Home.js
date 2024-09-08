@@ -5,11 +5,7 @@ import Footer from './Footer';
 import Header from './Header';
 import { useNavigate } from 'react-router-dom';
 
-const Home = ({ userEmail, isSignedIn, handleSignOut }) => {
-
-
-const Home = () => {
-
+const Home = ({ userEmail, isSignedIn }) => {
 
     const navigate = useNavigate();
     return (
@@ -56,5 +52,6 @@ const Home = () => {
         </div>
     );
 };
+
 
 export default Home;
