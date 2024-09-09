@@ -70,10 +70,11 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
                 handleSignOut={handleSignOut}
                 isSignedIn={isSignedIn}
             />
+            <h1 className='Book-serv'>Book a Service with {providerEmail} </h1>
             <div className='form-container'>
-                <h2>Book a Service with {providerEmail}</h2>
+                
                 <form className='client-form' onSubmit={handleServiceBooking}>
-                    <label>Service Type:</label>
+                    <label>Service Type:<br></br></label>
                     <select value={serviceType} onChange={(e) => setServiceType(e.target.value)} required>
                         <option value="">Select Service</option>
                         <option value="Painting">Painting</option>
