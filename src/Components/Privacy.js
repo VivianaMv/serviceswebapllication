@@ -30,7 +30,11 @@ const Privacy = ({userEmail, isSignedIn, setUserEmail, setIsSignedIn}) => {
                 <p className='descrip-home'>*Privacy Act S.C., 1985, c. P-21</p>
                 <p className='descrip-home'>An Act to extend the present laws of Canada that protect the privacy of individuals and that provide individuals with a right of access to personal information about themselves.</p>
 
-            <Footer />
+                <Footer 
+                userEmail={userEmail} 
+                handleSignOut={handleSignOut}
+                isSignedIn={isSignedIn} 
+            />
         </div>
 
 

@@ -29,7 +29,11 @@ const AboutUs = ({userEmail, isSignedIn, setUserEmail, setIsSignedIn}) => {
                 At easyathome we offer our clients and service providers the ease of choosing services that fit their time, budget and basic household needs.</p>
 
                 
-            <Footer />
+            <Footer 
+                userEmail={userEmail} 
+                handleSignOut={handleSignOut}
+                isSignedIn={isSignedIn} 
+            />
 
 
         </div>

@@ -23,7 +23,11 @@ const SignUpOptions = () => {
                 <button onClick={() => navigate("/signupprovider")}>Sign Up here</button>
             </div>
 
-            <Footer />
+            <Footer
+                userEmail={userEmail}
+                handleSignOut={handleSignOut}
+                isSignedIn={isSignedIn}
+            />
         </div>
 
 

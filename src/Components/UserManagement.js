@@ -15,8 +15,8 @@ const UserManagement = () => {
     const [userStatus, setUserStatus] = useState('');
     const [providerStatus, setProviderStatus] = useState('');
     const [error, setError] = useState(null);
-    const [email, setEmail] = useState('admin@gmail.com'); // Example, replace with actual email retrieval logic
-    const [isSignedIn, setIsSignedIn] = useState(true); // Example, replace with actual sign-in status
+    const [email, setEmail] = useState('admin@gmail.com');
+    const [isSignedIn, setIsSignedIn] = useState(true);
 
     useEffect(() => {
         fetchPendingProviders();
@@ -91,10 +91,8 @@ const UserManagement = () => {
             const providerSnapshot = await get(providerRef);
             const providerData = providerSnapshot.val();
 
-            // Move provider to 'approvedProviders' with default 'not_banned' status
             await set(ref(database, `approvedProviders/${providerId}`), { ...providerData, status: 'not_banned' });
 
-            // Remove from 'pendingProviders'
             await remove(providerRef);
 
             fetchPendingProviders();
@@ -259,7 +257,11 @@ const UserManagement = () => {
                     </div>
                 </div>
             </div>
-            <Footer />
+            <Footer
+                userEmail={userEmail}
+                handleSignOut={handleSignOut}
+                isSignedIn={isSignedIn}
+            />
         </div>
     );
 };
