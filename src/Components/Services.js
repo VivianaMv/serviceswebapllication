@@ -89,7 +89,11 @@ const Services = ({userEmail, isSignedIn, setUserEmail, setIsSignedIn}) => {
                 </table>
             </div>
 
-            <Footer />
+            <Footer 
+                userEmail={userEmail} 
+                handleSignOut={handleSignOut}
+                isSignedIn={isSignedIn} 
+            />
         </div>
 
 

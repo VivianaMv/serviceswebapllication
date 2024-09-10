@@ -17,6 +17,7 @@ import HomeProvider from './Components/HomeProvider';
 import UserManagement from './Components/UserManagement';
 import BookService from './Components/BookService';
 import ForgotPassword from './Components/ForgotPassword';
+import HomeAdmin from './Components/HomeAdmin';
 
 
 function App() {
@@ -30,44 +31,72 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signupclient" element={<SignUpClient setUserEmail={setUserEmail} />} />
-        <Route path="/signupprovider" element={<SignUpProvider />} />
-        <Route path="/signupoptions" element={<SignUpOptions />} />
-        <Route path="/aboutus" element={<AboutUs userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} />
-        <Route path="/privacy" element={<Privacy userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} />
-        <Route path="/termcond" element={<TermCond userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} />
-        <Route path="/services" element={<Services userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} />
-        <Route path="/contact" element={<Contact userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} />
-        <Route path="/signin" element={<SignIn setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} />
-       
-        <Route 
-          path="/homeuser" 
-          element={isSignedIn ? <HomeUser userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />} 
-        />
 
-        {/* <Route 
-          path="/usermanagement" 
-          element={isSignedIn && userEmail=== "admin@gmail.com" ? <UserManagement userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />} 
-        /> */}
         <Route 
-          path="/usermanagement" 
-          element={<UserManagement userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} 
+        path="/" 
+        element={<Home />} 
+        />
+        <Route 
+        path="/signupclient" 
+        element={<SignUpClient setUserEmail={setUserEmail} />} 
+        />
+        <Route 
+        path="/signupprovider" 
+        element={<SignUpProvider />} 
+        />
+        <Route 
+        path="/signupoptions" 
+        element={<SignUpOptions />} 
+        />
+        <Route 
+        path="/aboutus" 
+        element={<AboutUs userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} 
+        />
+        <Route 
+        path="/privacy" 
+        element={<Privacy userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} 
+        />
+        <Route 
+        path="/termcond" 
+        element={<TermCond userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} 
+        />
+        <Route 
+        path="/services" 
+        element={<Services userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} 
+        />
+        <Route 
+        path="/contact" 
+        element={<Contact userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} 
+        />
+        <Route 
+        path="/signin" 
+        element={<SignIn setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} />} 
+        />
+        <Route
+          path="/homeuser"
+          element={isSignedIn ? <HomeUser userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />}
+        />
+        <Route
+          path="/usermanagement"
+          element={isSignedIn && userEmail === "admin@gmail.com" ? <UserManagement userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />}
         />
         <Route
           path="/homeprovider"
           element={isSignedIn ? <HomeProvider userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />}
-        />         
-        <Route 
-          path="/bookservice" 
-          element={isSignedIn ? <BookService userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />} 
+        />
+        <Route
+          path="/bookservice"
+          element={isSignedIn ? <BookService userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />}
+        />
+        <Route
+          path="/homeadmin"
+          element={isSignedIn ? <HomeAdmin userEmail={userEmail} isSignedIn={isSignedIn} setUserEmail={setUserEmail} setIsSignedIn={setIsSignedIn} /> : <Navigate to="/signin" />}
         />
         <Route
           path="/reset"
-          element={
-            <ForgotPassword
-            />}
-            />
+          element={<ForgotPassword/>}
+        />
+        
       </Routes>
     </Router>
   );

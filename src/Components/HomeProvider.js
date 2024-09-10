@@ -74,7 +74,11 @@ const HomeProvider = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) =>
 
             
 
-            <Footer />
+            <Footer 
+                userEmail={userEmail} 
+                handleSignOut={handleSignOut}
+                isSignedIn={isSignedIn} 
+            />
 
         </div>
     );

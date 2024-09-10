@@ -46,7 +46,7 @@ const SignUpClient = ({ setUserEmail }) => {
 
   return (
     <div className='sign-up-pages'>
-      <Header/>
+      <Header />
       <h2 className='client-title'>Sign Up to Hire Services</h2>
       <div className='form-container'>
         <form className='client-form' onSubmit={handleSignUp}>
@@ -150,7 +150,11 @@ const SignUpClient = ({ setUserEmail }) => {
           {error && <p className="error-message">{error}</p>}
         </form>
       </div>
-      <Footer />
+      <Footer
+        userEmail={userEmail}
+        handleSignOut={handleSignOut}
+        isSignedIn={isSignedIn}
+      />
     </div>
   );
 };

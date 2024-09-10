@@ -63,7 +63,11 @@ const Contact = ({userEmail, isSignedIn, setUserEmail, setIsSignedIn}) => {
             </form>
 
 
-            <Footer />
+            <Footer 
+                userEmail={userEmail} 
+                handleSignOut={handleSignOut}
+                isSignedIn={isSignedIn} 
+            />
 
         </div>
 

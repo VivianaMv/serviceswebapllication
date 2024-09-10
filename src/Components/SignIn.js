@@ -94,7 +94,11 @@ const SignIn = ({ setUserEmail }) => {
                 <p className="Sign-up-here">You don't have an account? Sign up here</p>
                 <button onClick={() => navigate("/signupoptions")} type="submit">Sign Up</button>
             </div>
-            <Footer />
+            <Footer 
+                userEmail={userEmail} 
+                handleSignOut={handleSignOut}
+                isSignedIn={isSignedIn} 
+            />
         </div>
     );
 };
