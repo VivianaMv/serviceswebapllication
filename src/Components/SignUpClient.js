@@ -7,7 +7,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { ref, set } from 'firebase/database';
 import { useNavigate } from "react-router-dom";
 
-const SignUpClient = ({ setUserEmail }) => {
+const SignUpClient = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -43,6 +43,12 @@ const SignUpClient = ({ setUserEmail }) => {
       console.error("Sign-up error:", error.message);
     }
   };
+
+  const handleSignOut = () => {
+    setUserEmail("");
+    setIsSignedIn(false);
+    navigate('/');
+};
 
   return (
     <div className='sign-up-pages'>

@@ -6,7 +6,7 @@ import './Style.css';
 import Footer from './Footer';
 import Header from './Header';
 
-function ForgotPassword() {
+function ForgotPassword( { userEmail, isSignedIn, setUserEmail, setIsSignedIn }) {
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,6 +22,12 @@ function ForgotPassword() {
             console.log("Error:", err);
             alert(err.code);
         }
+    };
+
+    const handleSignOut = () => {
+        setUserEmail("");
+        setIsSignedIn(false);
+        navigate('/');
     };
 
     return (

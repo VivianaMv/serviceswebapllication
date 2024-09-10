@@ -1,82 +1,159 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Style.css';
 import Header from './Header';
 import Footer from './Footer';
-import { ref, push } from 'firebase/database';
+import { ref, get } from 'firebase/database';
 import { database } from '../firebase';
 import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
     const [serviceType, setServiceType] = useState('');
     const [serviceDate, setServiceDate] = useState('');
     const [serviceTime, setServiceTime] = useState('');
     const [error, setError] = useState(null);
+    const [accessToken, setAccessToken] = useState('');
+    const [storeName, setStoreName] = useState('');
+    const [providerEmail, setProviderEmail] = useState('');
+    const [gapiLoaded, setGapiLoaded] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Extract providerEmail from state with a fallback to an empty string
-    const { providerEmail = '' } = location.state || {};
+    useEffect(() => {
+        // Load Google API library
+        const loadGapiScript = () => {
+            const script = document.createElement('script');
+            script.src = 'https://apis.google.com/js/api.js';
+            script.async = true;
+            script.defer = true;
+            script.onload = () => {
+                window.gapi.load('client:auth2', initializeGapi);
+            };
+            document.body.appendChild(script);
+        };
 
-    // const handleServiceBooking = async (e) => {
-    //     e.preventDefault();
+        const initializeGapi = () => {
+            window.gapi.client.init({
+                apiKey: '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', // Your API Key
+                clientId: '65310157307-s5t6gtlqklb40ffra9t0a9bsk7vqihdk.apps.googleusercontent.com', // Your Client ID
+                discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
+                scope: 'https://www.googleapis.com/auth/calendar'
+            }).then(() => {
+                setGapiLoaded(true);
+                console.log('GAPI client initialized.');
+            }).catch((error) => {
+                console.error('Error initializing GAPI client:', error);
+            });
+        };
 
-    //     if (!userEmail) {
-    //         setError('User email is not defined.');
-    //     } else if (!providerEmail) {
-    //         setError('Provider email is not defined.');
+        loadGapiScript();
+    }, []);
 
-    //     }
+    useEffect(() => {
+        const query = new URLSearchParams(location.search);
+        const emailFromQuery = query.get('providerEmail');
+        const emailFromState = location.state?.providerEmail;
+        const storeNameFromState = location.state?.storeName;
 
-    //     const userId = userEmail.replace(/\./g, '_');
-    //     const providerId = providerEmail.replace(/\./g, '_');
+        const email = emailFromState || emailFromQuery;
 
-    //     try {
-    //         const userServiceRef = ref(database, `services/${userId}`);
-    //         const providerServiceRef = ref(database, `providerServices/${providerId}`);
+        if (email) {
+            setProviderEmail(email);
+            if (storeNameFromState) {
+                setStoreName(storeNameFromState);
+            } else {
+                fetchProviderData(email);
+            }
+        } else {
+            setError('Provider email not provided.');
+        }
+    }, [location]);
 
-    //         await push(userServiceRef).set({
-    //             name: serviceType,
-    //             date: serviceDate,
-    //             time: serviceTime,
-    //             status: 'Booked',
-    //             providerEmail
-    //         });
+    const fetchProviderData = async (email) => {
+        try {
+            const emailKey = email.replace(/\./g, '_');
+            const approvedProvidersRef = ref(database, `approvedProviders/${emailKey}`);
+            const snapshot = await get(approvedProvidersRef);
 
-    //         await push(providerServiceRef).set({
-    //             name: serviceType,
-    //             date: serviceDate,
-    //             time: serviceTime,
-    //             status: 'Booked',
-    //             clientEmail: userEmail
-    //         });
-
-    //         alert('Service booked successfully!');
-    //         navigate('/homeuser');
-    //     } catch (error) {
-    //         setError('Error booking service: ' + error.message);
-    //     }
-    // };
-
-    const [schedule, setSchedule] = useState(null);
-
-    // client Id 1000.KZ5V66G3H4XNC47B9RPNXGAQYLXC1Q
-    // client secret 6c46b37e0b7ab0f401d4c4ceb671caf4f5cda6d955
-
-    // generated code 1000.6be0556c68502ab42743f4e098979b8b.fad7c3168d4c3128c0c050570d9c7a74
-
-    const getSchedule = async (e) => {
-        e.preventDefault();
-        const apiKey = '1000.6be0556c68502ab42743f4e098979b8b.fad7c3168d4c3128c0c050570d9c7a74';
-        const url = `https://accounts.zoho.com/oauth/v2/token`;
-        const response = await fetch(url);
-        const data = await response.json();
-        setSchedule(data);
-      };
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                setStoreName(data.storeName || '');
+            } else {
+                setError('Provider data not found.');
+            }
+        } catch (error) {
+            setError('Error fetching provider data: ' + error.message);
+        }
+    };
 
     const handleSignOut = () => {
-        setUserEmail("");
+        setUserEmail('');
         setIsSignedIn(false);
         navigate('/');
+    };
+
+    const signInToGoogle = () => {
+        if (window.gapi.auth2.getAuthInstance()) {
+            window.gapi.auth2.getAuthInstance().signIn().then(() => {
+                const authInstance = window.gapi.auth2.getAuthInstance();
+                setAccessToken(authInstance.currentUser.get().getAuthResponse().access_token);
+            }).catch((error) => {
+                setError('Error signing in: ' + error.message);
+            });
+        }
+    };
+
+    const handleServiceBooking = async (e) => {
+        e.preventDefault();
+
+        if (!userEmail) {
+            setError('User email is not defined.');
+            return;
+        } else if (!providerEmail) {
+            setError('Provider email is not defined.');
+            return;
+        }
+
+        if (!gapiLoaded) {
+            setError('Google API not loaded.');
+            return;
+        }
+
+        if (!accessToken) {
+            signInToGoogle();
+            return;
+        }
+
+        try {
+            const response = await window.gapi.client.calendar.events.insert({
+                calendarId: 'primary',
+                resource: {
+                    summary: `Service Booking: ${serviceType}`,
+                    description: `Service Type: ${serviceType}\nDate: ${serviceDate}\nTime: ${serviceTime}`,
+                    start: {
+                        dateTime: `${serviceDate}T${serviceTime}:00`,
+                        timeZone: 'America/Los_Angeles'
+                    },
+                    end: {
+                        dateTime: `${serviceDate}T${parseInt(serviceTime.split(':')[0]) + 1}:${serviceTime.split(':')[1]}:00`,
+                        timeZone: 'America/Los_Angeles'
+                    },
+                    attendees: [
+                        { email: providerEmail },
+                        { email: userEmail }
+                    ]
+                }
+            });
+
+            if (response.status === 200) {
+                alert('Service booked successfully!');
+                navigate('/homeuser');
+            } else {
+                setError('Error booking service: ' + response.result.error.message);
+            }
+        } catch (error) {
+            setError('Error booking service: ' + error.message);
+        }
     };
 
     return (
@@ -86,11 +163,10 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
                 handleSignOut={handleSignOut}
                 isSignedIn={isSignedIn}
             />
-            <h1 className='Book-serv'>Book a Service with {providerEmail} </h1>
+            <h1 className='Book-serv'>Book a Service with {storeName || 'Unknown Provider'} </h1>
             <div className='form-container'>
-                
-                <form className='client-form' onSubmit={getSchedule}>
-                    <label>Service Type:<br></br></label>
+                <form className='client-form' onSubmit={handleServiceBooking}>
+                    <label>Service Type:<br /></label>
                     <select value={serviceType} onChange={(e) => setServiceType(e.target.value)} required>
                         <option value="">Select Service</option>
                         <option value="Painting">Painting</option>
@@ -108,11 +184,7 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
                 </form>
                 {error && <p className="error-message">{error}</p>}
             </div>
-            <Footer 
-                userEmail={userEmail} 
-                handleSignOut={handleSignOut}
-                isSignedIn={isSignedIn} 
-            />
+            <Footer />
         </div>
     );
 };
