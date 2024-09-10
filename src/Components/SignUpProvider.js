@@ -118,7 +118,11 @@ const SignUpProvider = () => {
                 </form>
             </div>
 
-            <Footer />
+            <Footer
+                userEmail={userEmail}
+                handleSignOut={handleSignOut}
+                isSignedIn={isSignedIn}
+            />
         </div>
     );
 };

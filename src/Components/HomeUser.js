@@ -165,7 +165,11 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
                     )}
                 </div>
             </div>
-            <Footer />
+            <Footer 
+                userEmail={userEmail} 
+                handleSignOut={handleSignOut}
+                isSignedIn={isSignedIn} 
+            />
         </div>
     );
 };

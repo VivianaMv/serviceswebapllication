@@ -35,7 +35,11 @@ function ForgotPassword() {
                 <button type="submit">Reset</button>
             </form>
 
-            <Footer />
+            <Footer 
+                userEmail={userEmail} 
+                handleSignOut={handleSignOut}
+                isSignedIn={isSignedIn} 
+            />
         </div>
     );
 }
