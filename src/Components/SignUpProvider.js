@@ -7,7 +7,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { ref, set } from 'firebase/database';
 import { useNavigate } from "react-router-dom";
 
-const SignUpProvider = () => {
+const SignUpProvider = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
     const [storeName, setStoreName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -38,6 +38,12 @@ const SignUpProvider = () => {
         } catch (error) {
             setError(error.message);
         }
+    };
+
+    const handleSignOut = () => {
+        setUserEmail("");
+        setIsSignedIn(false);
+        navigate('/');
     };
 
     return (

@@ -5,7 +5,13 @@ import Footer from './Footer';
 import Header from './Header';
 import { useNavigate } from 'react-router-dom';
 
-const Home = ({ userEmail, isSignedIn }) => {
+const Home = ({  userEmail, isSignedIn, setUserEmail, setIsSignedIn  }) => {
+
+    const handleSignOut = () => {
+        setUserEmail("");
+        setIsSignedIn(false);
+        navigate('/');
+    };
 
     const navigate = useNavigate();
     return (

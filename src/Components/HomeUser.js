@@ -36,7 +36,7 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
             setError(error.message);
         }
     };
-    
+
 
     const fetchAllUsers = async () => {
         try {
@@ -78,9 +78,12 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
         navigate('/');
     };
 
-    const bookServiceWithProvider = (providerEmail) => {
-        navigate(`/bookservice?providerEmail=${providerEmail}`);
+    const bookServiceWithProvider = (providerEmail, storeName) => {
+        navigate(`/bookservice?providerEmail=${providerEmail}`, {
+            state: { providerEmail, storeName }
+        });
     };
+
 
     const formatServices = (services) => {
         return services.join(', ');
@@ -97,7 +100,7 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
                 <div className="client-info">
                     <h1>Welcome! {clientName}</h1>
                 </div>
-              
+
                 <div className="home-user-content">
                     <div className="calendar-container">
                         <h3>Upcoming Services Calendar</h3>
@@ -141,7 +144,7 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
                                 <tr>
                                     <th>Store Name</th>
                                     <th>Services</th>
-                                    <th>Action</th>                                    
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -152,12 +155,13 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
                                             <p>{formatServices(provider.services)}</p>
                                         </td>
                                         <td>
-                                            <button onClick={() => bookServiceWithProvider(provider.email)}>
+                                            <button onClick={() => bookServiceWithProvider(provider.email, provider.storeName)}>
                                                 Book Service
                                             </button>
                                         </td>
                                     </tr>
                                 ))}
+
                             </tbody>
                         </table>
                     ) : (
@@ -165,10 +169,10 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
                     )}
                 </div>
             </div>
-            <Footer 
-                userEmail={userEmail} 
+            <Footer
+                userEmail={userEmail}
                 handleSignOut={handleSignOut}
-                isSignedIn={isSignedIn} 
+                isSignedIn={isSignedIn}
             />
         </div>
     );

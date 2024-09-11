@@ -6,8 +6,14 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const SignUpOptions = () => {
+const SignUpOptions = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
     const navigate = useNavigate();
+
+    const handleSignOut = () => {
+        setUserEmail("");
+        setIsSignedIn(false);
+        navigate('/');
+    };
     return (
         <div >
             <Header />
