@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './Style.css';
 import Header from './Header';
 import Footer from './Footer';
-import { ref, get } from 'firebase/database';
+import { ref, get,push,set } from 'firebase/database';
 import { database } from '../firebase';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
 
 const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
     const [serviceType, setServiceType] = useState('');
@@ -15,38 +14,31 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
     const [accessToken, setAccessToken] = useState('');
     const [storeName, setStoreName] = useState('');
     const [providerEmail, setProviderEmail] = useState('');
-    const [gapiLoaded, setGapiLoaded] = useState(false);
+    const [gsiInitialized, setGsiInitialized] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
-        // Load Google API library
-        const loadGapiScript = () => {
+        const initializeGoogleIdentityServices = () => {
             const script = document.createElement('script');
-            script.src = 'https://apis.google.com/js/api.js';
+            script.src = 'https://accounts.google.com/gsi/client';
             script.async = true;
             script.defer = true;
             script.onload = () => {
-                window.gapi.load('client:auth2', initializeGapi);
+                setGsiInitialized(true);
+                console.log('Google Identity Services initialized.');
+            };
+            script.onerror = () => {
+                setError('Failed to load Google Identity Services.');
             };
             document.body.appendChild(script);
         };
 
-        const initializeGapi = () => {
-            window.gapi.client.init({
-                apiKey: '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', // Your API Key
-                clientId: '65310157307-s5t6gtlqklb40ffra9t0a9bsk7vqihdk.apps.googleusercontent.com', // Your Client ID
-                discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
-                scope: 'https://www.googleapis.com/auth/calendar'
-            }).then(() => {
-                setGapiLoaded(true);
-                console.log('GAPI client initialized.');
-            }).catch((error) => {
-                console.error('Error initializing GAPI client:', error);
-            });
-        };
-
-        loadGapiScript();
+        if (!window.google || !window.google.accounts) {
+            initializeGoogleIdentityServices();
+        } else {
+            setGsiInitialized(true);
+        }
     }, []);
 
     useEffect(() => {
@@ -93,13 +85,28 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
     };
 
     const signInToGoogle = () => {
-        if (window.gapi.auth2.getAuthInstance()) {
-            window.gapi.auth2.getAuthInstance().signIn().then(() => {
-                const authInstance = window.gapi.auth2.getAuthInstance();
-                setAccessToken(authInstance.currentUser.get().getAuthResponse().access_token);
-            }).catch((error) => {
-                setError('Error signing in: ' + error.message);
+        if (!gsiInitialized) {
+            setError('Google Identity Services not initialized.');
+            return;
+        }
+
+        if (window.google && window.google.accounts) {
+            const client = window.google.accounts.oauth2.initTokenClient({
+                client_id: '65310157307-s5t6gtlqklb40ffra9t0a9bsk7vqihdk.apps.googleusercontent.com', // Your Client ID
+                scope: 'https://www.googleapis.com/auth/calendar',
+                callback: (response) => {
+                    if (response.error) {
+                        setError('Error during sign-in: ' + response.error);
+                        return;
+                    }
+                    setAccessToken(response.access_token);
+                    console.log('Access token obtained:', response.access_token);
+                },
             });
+
+            client.requestAccessToken();
+        } else {
+            setError('Google Identity Services not loaded.');
         }
     };
 
@@ -114,8 +121,8 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
             return;
         }
 
-        if (!gapiLoaded) {
-            setError('Google API not loaded.');
+        if (!gsiInitialized) {
+            setError('Google Identity Services not initialized.');
             return;
         }
 
@@ -125,9 +132,13 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
         }
 
         try {
-            const response = await window.gapi.client.calendar.events.insert({
-                calendarId: 'primary',
-                resource: {
+            const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
                     summary: `Service Booking: ${serviceType}`,
                     description: `Service Type: ${serviceType}\nDate: ${serviceDate}\nTime: ${serviceTime}`,
                     start: {
@@ -142,19 +153,43 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
                         { email: providerEmail },
                         { email: userEmail }
                     ]
-                }
+                }),
             });
 
-            if (response.status === 200) {
+            if (response.ok) {
                 alert('Service booked successfully!');
+                saveServiceToFirebase();
                 navigate('/homeuser');
             } else {
-                setError('Error booking service: ' + response.result.error.message);
+                const errorData = await response.json();
+                setError('Error booking service: ' + errorData.error.message);
             }
         } catch (error) {
             setError('Error booking service: ' + error.message);
         }
+
+        
     };
+
+    const saveServiceToFirebase = async () => {
+        try {
+            const userId = userEmail.replace(/\./g, '_');
+            const newServiceRef = push(ref(database, `services/${userId}`)); 
+            await set(newServiceRef, {
+                name: serviceType,
+                date: serviceDate,
+                time: serviceTime,
+                status: 'Booked',
+                providerEmail: providerEmail.replace(/\./g, '_'),
+                storeName
+            });
+            console.log('Service saved to Firebase.');
+        } catch (error) {
+            console.error('Error saving service to Firebase:', error.message);
+            setError('Error saving service to Firebase: ' + error.message);
+        }
+    };
+    
 
     return (
         <div className='book-service-page'>
