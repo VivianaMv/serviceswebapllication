@@ -8,11 +8,17 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { ref, get } from 'firebase/database';
 import { database } from '../firebase';
 
-const SignIn = ({ setUserEmail }) => {
+const SignIn = ({  userEmail, isSignedIn, setUserEmail, setIsSignedIn  }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+
+    const handleSignOut = () => {
+        setUserEmail("");
+        setIsSignedIn(false);
+        navigate('/');
+    };
 
     const handleSignin = async (e) => {
         e.preventDefault();

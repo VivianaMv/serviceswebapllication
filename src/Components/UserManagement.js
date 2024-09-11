@@ -4,8 +4,10 @@ import { database } from '../firebase';
 import './Style.css';
 import Header from './Header';
 import Footer from './Footer';
+import { useNavigate } from "react-router-dom";
 
-const UserManagement = () => {
+
+const UserManagement = ({ userEmail, setUserEmail }) => {
     const [pendingProviders, setPendingProviders] = useState([]);
     const [approvedProviders, setApprovedProviders] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
@@ -17,6 +19,8 @@ const UserManagement = () => {
     const [error, setError] = useState(null);
     const [email, setEmail] = useState('admin@gmail.com');
     const [isSignedIn, setIsSignedIn] = useState(true);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         fetchPendingProviders();
@@ -140,6 +144,12 @@ const UserManagement = () => {
         } catch (error) {
             setError(error.message);
         }
+    };
+
+    const handleSignOut = () => {
+        setUserEmail("");
+        setIsSignedIn(false);
+        navigate('/');
     };
 
     return (

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Style.css';
 import Header from './Header';
 import Footer from './Footer';
-import { ref, push } from 'firebase/database';
+import { ref, get,push,set } from 'firebase/database';
 import { database } from '../firebase';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -11,73 +11,185 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
     const [serviceDate, setServiceDate] = useState('');
     const [serviceTime, setServiceTime] = useState('');
     const [error, setError] = useState(null);
+    const [accessToken, setAccessToken] = useState('');
+    const [storeName, setStoreName] = useState('');
+    const [providerEmail, setProviderEmail] = useState('');
+    const [gsiInitialized, setGsiInitialized] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Extract providerEmail from state with a fallback to an empty string
-    const { providerEmail = '' } = location.state || {};
+    useEffect(() => {
+        const initializeGoogleIdentityServices = () => {
+            const script = document.createElement('script');
+            script.src = 'https://accounts.google.com/gsi/client';
+            script.async = true;
+            script.defer = true;
+            script.onload = () => {
+                setGsiInitialized(true);
+                console.log('Google Identity Services initialized.');
+            };
+            script.onerror = () => {
+                setError('Failed to load Google Identity Services.');
+            };
+            document.body.appendChild(script);
+        };
 
-    // const handleServiceBooking = async (e) => {
-    //     e.preventDefault();
+        if (!window.google || !window.google.accounts) {
+            initializeGoogleIdentityServices();
+        } else {
+            setGsiInitialized(true);
+        }
+    }, []);
 
-    //     if (!userEmail) {
-    //         setError('User email is not defined.');
-    //     } else if (!providerEmail) {
-    //         setError('Provider email is not defined.');
+    useEffect(() => {
+        const query = new URLSearchParams(location.search);
+        const emailFromQuery = query.get('providerEmail');
+        const emailFromState = location.state?.providerEmail;
+        const storeNameFromState = location.state?.storeName;
 
-    //     }
+        const email = emailFromState || emailFromQuery;
 
-    //     const userId = userEmail.replace(/\./g, '_');
-    //     const providerId = providerEmail.replace(/\./g, '_');
+        if (email) {
+            setProviderEmail(email);
+            if (storeNameFromState) {
+                setStoreName(storeNameFromState);
+            } else {
+                fetchProviderData(email);
+            }
+        } else {
+            setError('Provider email not provided.');
+        }
+    }, [location]);
 
-    //     try {
-    //         const userServiceRef = ref(database, `services/${userId}`);
-    //         const providerServiceRef = ref(database, `providerServices/${providerId}`);
+    const fetchProviderData = async (email) => {
+        try {
+            const emailKey = email.replace(/\./g, '_');
+            const approvedProvidersRef = ref(database, `approvedProviders/${emailKey}`);
+            const snapshot = await get(approvedProvidersRef);
 
-    //         await push(userServiceRef).set({
-    //             name: serviceType,
-    //             date: serviceDate,
-    //             time: serviceTime,
-    //             status: 'Booked',
-    //             providerEmail
-    //         });
-
-    //         await push(providerServiceRef).set({
-    //             name: serviceType,
-    //             date: serviceDate,
-    //             time: serviceTime,
-    //             status: 'Booked',
-    //             clientEmail: userEmail
-    //         });
-
-    //         alert('Service booked successfully!');
-    //         navigate('/homeuser');
-    //     } catch (error) {
-    //         setError('Error booking service: ' + error.message);
-    //     }
-    // };
-
-    const [schedule, setSchedule] = useState(null);
-
-    // client Id 1000.KZ5V66G3H4XNC47B9RPNXGAQYLXC1Q
-    // client secret 6c46b37e0b7ab0f401d4c4ceb671caf4f5cda6d955
-
-    // generated code 1000.6be0556c68502ab42743f4e098979b8b.fad7c3168d4c3128c0c050570d9c7a74
-
-    const getSchedule = async (e) => {
-        e.preventDefault();
-        const apiKey = '1000.6be0556c68502ab42743f4e098979b8b.fad7c3168d4c3128c0c050570d9c7a74';
-        const url = `https://accounts.zoho.com/oauth/v2/token`;
-        const response = await fetch(url);
-        const data = await response.json();
-        setSchedule(data);
-      };
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                setStoreName(data.storeName || '');
+            } else {
+                setError('Provider data not found.');
+            }
+        } catch (error) {
+            setError('Error fetching provider data: ' + error.message);
+        }
+    };
 
     const handleSignOut = () => {
-        setUserEmail("");
+        setUserEmail('');
         setIsSignedIn(false);
         navigate('/');
     };
+
+    const signInToGoogle = () => {
+        if (!gsiInitialized) {
+            setError('Google Identity Services not initialized.');
+            return;
+        }
+
+        if (window.google && window.google.accounts) {
+            const client = window.google.accounts.oauth2.initTokenClient({
+                client_id: '65310157307-s5t6gtlqklb40ffra9t0a9bsk7vqihdk.apps.googleusercontent.com', // Your Client ID
+                scope: 'https://www.googleapis.com/auth/calendar',
+                callback: (response) => {
+                    if (response.error) {
+                        setError('Error during sign-in: ' + response.error);
+                        return;
+                    }
+                    setAccessToken(response.access_token);
+                    console.log('Access token obtained:', response.access_token);
+                },
+            });
+
+            client.requestAccessToken();
+        } else {
+            setError('Google Identity Services not loaded.');
+        }
+    };
+
+    const handleServiceBooking = async (e) => {
+        e.preventDefault();
+
+        if (!userEmail) {
+            setError('User email is not defined.');
+            return;
+        } else if (!providerEmail) {
+            setError('Provider email is not defined.');
+            return;
+        }
+
+        if (!gsiInitialized) {
+            setError('Google Identity Services not initialized.');
+            return;
+        }
+
+        if (!accessToken) {
+            signInToGoogle();
+            return;
+        }
+
+        try {
+            const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    summary: `Service Booking: ${serviceType}`,
+                    description: `Service Type: ${serviceType}\nDate: ${serviceDate}\nTime: ${serviceTime}`,
+                    start: {
+                        dateTime: `${serviceDate}T${serviceTime}:00`,
+                        timeZone: 'America/Los_Angeles'
+                    },
+                    end: {
+                        dateTime: `${serviceDate}T${parseInt(serviceTime.split(':')[0]) + 1}:${serviceTime.split(':')[1]}:00`,
+                        timeZone: 'America/Los_Angeles'
+                    },
+                    attendees: [
+                        { email: providerEmail },
+                        { email: userEmail }
+                    ]
+                }),
+            });
+
+            if (response.ok) {
+                alert('Service booked successfully!');
+                saveServiceToFirebase();
+                navigate('/homeuser');
+            } else {
+                const errorData = await response.json();
+                setError('Error booking service: ' + errorData.error.message);
+            }
+        } catch (error) {
+            setError('Error booking service: ' + error.message);
+        }
+
+        
+    };
+
+    const saveServiceToFirebase = async () => {
+        try {
+            const userId = userEmail.replace(/\./g, '_');
+            const newServiceRef = push(ref(database, `services/${userId}`)); 
+            await set(newServiceRef, {
+                name: serviceType,
+                date: serviceDate,
+                time: serviceTime,
+                status: 'Booked',
+                providerEmail: providerEmail.replace(/\./g, '_'),
+                storeName
+            });
+            console.log('Service saved to Firebase.');
+        } catch (error) {
+            console.error('Error saving service to Firebase:', error.message);
+            setError('Error saving service to Firebase: ' + error.message);
+        }
+    };
+    
 
     return (
         <div className='book-service-page'>
@@ -86,11 +198,10 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
                 handleSignOut={handleSignOut}
                 isSignedIn={isSignedIn}
             />
-            <h1 className='Book-serv'>Book a Service with {providerEmail} </h1>
+            <h1 className='Book-serv'>Book a Service with {storeName || 'Unknown Provider'} </h1>
             <div className='form-container'>
-                
-                <form className='client-form' onSubmit={getSchedule}>
-                    <label>Service Type:<br></br></label>
+                <form className='client-form' onSubmit={handleServiceBooking}>
+                    <label>Service Type:<br /></label>
                     <select value={serviceType} onChange={(e) => setServiceType(e.target.value)} required>
                         <option value="">Select Service</option>
                         <option value="Painting">Painting</option>
@@ -108,11 +219,7 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
                 </form>
                 {error && <p className="error-message">{error}</p>}
             </div>
-            <Footer 
-                userEmail={userEmail} 
-                handleSignOut={handleSignOut}
-                isSignedIn={isSignedIn} 
-            />
+            <Footer />
         </div>
     );
 };
