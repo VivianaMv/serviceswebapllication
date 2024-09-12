@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Style.css';
 import Header from './Header';
 import Footer from './Footer';
-import { ref, get,push,set } from 'firebase/database';
+import { ref, get, push, set } from 'firebase/database';
 import { database } from '../firebase';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -10,6 +10,7 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
     const [serviceType, setServiceType] = useState('');
     const [serviceDate, setServiceDate] = useState('');
     const [serviceTime, setServiceTime] = useState('');
+    const [serviceAddress, setServiceAddress] = useState('');
     const [error, setError] = useState(null);
     const [accessToken, setAccessToken] = useState('');
     const [storeName, setStoreName] = useState('');
@@ -140,14 +141,14 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
                 },
                 body: JSON.stringify({
                     summary: `Service Booking: ${serviceType}`,
-                    description: `Service Type: ${serviceType}\nDate: ${serviceDate}\nTime: ${serviceTime}`,
+                    description: `Service Type: ${serviceType}\nDate: ${serviceDate}\nTime: ${serviceTime}\nAddress: ${serviceAddress}`,
                     start: {
                         dateTime: `${serviceDate}T${serviceTime}:00`,
-                        timeZone: 'America/Los_Angeles'
+                        timeZone: 'America/Toronto'
                     },
                     end: {
                         dateTime: `${serviceDate}T${parseInt(serviceTime.split(':')[0]) + 1}:${serviceTime.split(':')[1]}:00`,
-                        timeZone: 'America/Los_Angeles'
+                        timeZone: 'America/Toronto'
                     },
                     attendees: [
                         { email: providerEmail },
@@ -167,29 +168,41 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
         } catch (error) {
             setError('Error booking service: ' + error.message);
         }
-
-        
     };
 
     const saveServiceToFirebase = async () => {
         try {
             const userId = userEmail.replace(/\./g, '_');
-            const newServiceRef = push(ref(database, `services/${userId}`)); 
-            await set(newServiceRef, {
+            const providerId = providerEmail.replace(/\./g, '_');
+            const serviceId = push(ref(database, 'services')).key; // Unique ID for the service
+    
+            const userServicesRef = ref(database, `userServices/${userId}/${serviceId}`);
+            const providerServicesRef = ref(database, `providerServices/${providerId}/${serviceId}`);
+            const adminServicesRef = ref(database, `adminServices/${serviceId}`);
+    
+            const serviceData = {
+                id: serviceId,
                 name: serviceType,
                 date: serviceDate,
                 time: serviceTime,
+                address: serviceAddress,
                 status: 'Booked',
-                providerEmail: providerEmail.replace(/\./g, '_'),
-                storeName
-            });
+                providerEmail: providerEmail,
+                storeName,
+                clientEmail: userEmail // Include clientEmail in the data
+            };
+    
+            await set(userServicesRef, serviceData);
+            await set(providerServicesRef, serviceData);
+            await set(adminServicesRef, serviceData);
+    
             console.log('Service saved to Firebase.');
+    
         } catch (error) {
             console.error('Error saving service to Firebase:', error.message);
             setError('Error saving service to Firebase: ' + error.message);
         }
     };
-    
 
     return (
         <div className='book-service-page'>
@@ -198,11 +211,11 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
                 handleSignOut={handleSignOut}
                 isSignedIn={isSignedIn}
             />
-            <h1 className='Book-serv'>Book a Service with {storeName || 'Unknown Provider'} </h1>
+            <h2 className='Book-serv'>Book a Service with {storeName || 'Unknown Provider'} </h2>
             <div className='form-container'>
                 <form className='client-form' onSubmit={handleServiceBooking}>
                     <label>Service Type:<br /></label>
-                    <select value={serviceType} onChange={(e) => setServiceType(e.target.value)} required>
+                    <select className='book-service-input' value={serviceType} onChange={(e) => setServiceType(e.target.value)} required>
                         <option value="">Select Service</option>
                         <option value="Painting">Painting</option>
                         <option value="Cleaning">Cleaning</option>
@@ -210,11 +223,14 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
                     </select>
 
                     <label>Date:</label>
-                    <input type='date' value={serviceDate} onChange={(e) => setServiceDate(e.target.value)} required />
+                    <input className='book-service-input' type='date' value={serviceDate} onChange={(e) => setServiceDate(e.target.value)} required />
 
                     <label>Time:</label>
-                    <input type='time' value={serviceTime} onChange={(e) => setServiceTime(e.target.value)} required />
+                    <input className='book-service-input' type='time' value={serviceTime} onChange={(e) => setServiceTime(e.target.value)} required />
 
+                    <label>Service Address:</label>
+                    <input className='book-service-input' type='text' value={serviceAddress} onChange={(e) => setServiceAddress(e.target.value)} required />
+                    <br></br>
                     <button type='submit'>Book Service</button>
                 </form>
                 {error && <p className="error-message">{error}</p>}
