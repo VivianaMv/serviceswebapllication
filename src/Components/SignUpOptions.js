@@ -17,8 +17,8 @@ const SignUpOptions = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) =
     return (
         <div >
             <Header />
-
-            <h1 className='About'>Joins as a client or as service provider</h1>
+            <br></br>
+            <h2 className='About'>Join as a Client or as Service Provider</h2>
             <div className='SignUpOpt' >
                 <h2 className="signin-title">Client</h2>
                 <button onClick={() => navigate("/signupclient")}>Sign Up here</button>
