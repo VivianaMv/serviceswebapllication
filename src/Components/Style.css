@@ -1,4 +1,4 @@
-body{
+body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: rgb(253, 249, 244);
 }
@@ -20,7 +20,7 @@ body{
     gap: 20px; 
 }
 
-.home-table{
+.home-table {
     margin: 30px;
 }
 
@@ -30,19 +30,16 @@ body{
 }
 
 .des-home {
-
-
     padding: 10px 100px;
     text-align: justify;
     font-size: x-large;
 }
-.Our-Services{
-    text-align: center;
 
+.Our-Services {
+    text-align: center;
 }
 
-
-.Home-title{
+.Home-title {
     font-size: xx-large;
     font-family: 'Courier New', Courier, monospace;
     font-weight: 500;
@@ -74,8 +71,7 @@ body{
     width: 250px;
 }
 
-
-button{
+button {
     font-size: large;
     padding: 15px 20px;
     cursor: pointer;
@@ -96,8 +92,7 @@ button:hover {
     color: #333;
 }
 
-
-.home-presentation{
+.home-presentation {
     display: inline;
     grid-template-rows: repeat(2, 1fr);
 }
@@ -117,64 +112,55 @@ button:hover {
     margin-top: 20px;
 }
 
-
-.descrip-home{
-
+.descrip-home {
     font-size: x-large;
     text-align: center;
-    
 }
 
-.home-logos{
+.home-logos {
     display: flex;
     gap: 200px;
     justify-content: center;
     margin-top: 100px;
 }
 
-.logo-home-title{
+.logo-home-title {
     text-align: center;
 }
 
-
-.logo-cleaning2 , 
+.logo-cleaning2, 
 .logo-painting2,
-.logo-gardening2
-
- {
+.logo-gardening2 {
     margin-left: 200px; 
     padding: 30px;
-    
 }
 
-.services-Description{
-   
+.services-Description {
     padding-left: 20px;
     padding-right: 80px;
-  
 }
 
 .About,
 .Privacy,
-.Term{
-
+.Term {
     text-align: center;
-    
-  
 }
-.form{
-width: 400px;
+
+.form {
+    width: 400px;
     padding: 20px;
     border-radius: 10px;
     margin: auto;
     background-color: #ccc;
 } 
- label{
+
+label {
     width: 150px;
     display: inline-block;
- }   
+}   
+
 .Welcome,
-.Book-serv{
+.Book-serv {
     text-align: center;
 }
 
@@ -184,9 +170,7 @@ width: 400px;
     align-items: center;
     margin-bottom: 50px;
     margin-top: 50px;
-    
 }
-
 
 /* .form-container {
           
@@ -203,9 +187,7 @@ width: 400px;
     align-items: center;
 } */
 
-
-
-.footer{
+.footer {
     display: flex;
     gap: 60px;
     justify-content: center;
@@ -213,16 +195,16 @@ width: 400px;
     margin-bottom: 20px;
 }
 
-a{
+a {
     text-decoration: none;
     color: black;
 }
 
-a:hover{
+a:hover {
     color: blue;
 }
 
-.client-form{
+.client-form {
     display: grid;
     grid-template-columns: 1fr;
     width: 400px;
@@ -230,12 +212,12 @@ a:hover{
     align-items: center;
 }
 
-.sign-up-pages{
+.sign-up-pages {
     display: flex;
     flex-direction: column;
 }
 
-.form-container{
+.form-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -243,12 +225,12 @@ a:hover{
     flex-direction: column;
 }
 
-.client-title{
+.client-title {
     text-align: center;
     margin-top: 100px;
 }
 
-.input-client-form{
+.input-client-form {
     width: 100%;
     border-radius: 5px;
     margin-top: 10px;
@@ -257,64 +239,65 @@ a:hover{
     margin-bottom: 15px;
 }
 
-.address-style{
+.address-style {
     margin-top: 20px;
 }
 
-.form-signin{
+.form-signin {
     display: grid;
     justify-content: center;
     margin-top: 50px;
 }
 
-.services-signup-container{
+.services-signup-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     margin-bottom: 50px;
     margin-top: 20px;
 }
 
-.services-signup-items{
+.services-signup-items {
     display: flex;
     gap: 10px;
 }
+
 .Sign-up-here,
 .Forgot-Password,
-.Password{
+.Password {
     text-align: center;
 }
 
-.user-management-page{
+.user-management-page {
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-bottom: 40px;
     margin-top: 20px;
 }
 
-.user-management-container{
+.user-management-container {
     display: grid;
     align-items: center;
     justify-content: center;
 }
 
-.um-list{
+.um-list {
     display: grid;
     align-items: center;
     justify-content: center;
 }
 
-.sign-in-page{
+.sign-in-page {
     display: grid;
     align-items: center;
     justify-content: center;
 }
 
-.signin-title{
+.signin-title {
     text-align: center;
     font-weight: 400;
 }
 
-.signup-buttons{
+.signup-buttons {
     display: flex;
     justify-content: center;
 }
@@ -327,26 +310,18 @@ a:hover{
 
 .client-info {
     text-align: right;
-    margin-bottom: 20px;
-    margin-right: 50%;
-}
-
-.home-user-content {
-    display: flex;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.calendar-container {
-    width: 30%;
-    padding: 20px;
-    border-right: 1px solid #ccc;
-    margin-left:300px;
+    margin-bottom: 20px;    
+    margin-right: 20px;
 }
 
 .services-table-container {
-    width: 70%;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
 }
 
 .services-table {
@@ -358,62 +333,96 @@ a:hover{
 .services-table th, .services-table td {
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: left;
+    text-align: center;
 }
 
 .services-table th {
-    background-color: #f2f2f2;
+    background-color: rgb(187, 142, 84);
+    color: white;
 }
-.footer{
+
+.footer {
     font-size: large;
     padding: 15px 20px;
     cursor: pointer;
     border: none;
-    color:green;
+    color: rgb(0, 0, 0);
     border-radius: 5px;
     transition: background-color 0.3s;
+}
+
+.foot:hover {
+    color: rgb(187, 142, 84);
 }
 
 button:hover {
     background-color: rgb(157, 106, 40);
 }
 
-.provider-item, .user-item{
+.provider-item, .user-item {
     border: 1px solid gray;
-    /* margin: 5px; */
-    /* padding: 15px; */
+    margin: 5px;
+    padding: 15px;
 }
 
-.provider-actions{
+.provider-actions {
     display: flex;
     justify-content: center;
     gap: 10px;
 }
 
-.available-services{
+.available-services {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
+.providers-table {
+    border: 1px solid gray;
+    width: 100%;
+}
 
-.providers-table td{
+.providers-table td {
     font-size: medium;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin: 10px;
     padding: 10px;
     border-bottom: 1px solid gray;
 }
-.Password{
+
+.providers-table th {
     font-size: large;
-        padding: 15px 20px;
-        cursor: pointer;
-        border: none;
-        color: green;
-        border-radius: 5px;
-        transition: background-color 0.3s;
+    font-weight: 200;
+    text-decoration: underline;
+}
 
+.Password {
+    font-size: large;
+    padding: 15px 20px;
+    cursor: pointer;
+    border: none;
+    color: green;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
 
+.book-service-input {
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid gray;
+    height: 30px;
+    margin-bottom: 15px;
+}
+
+.user-management-button{
+    display: flex;
+    align-items: end;
+    margin-bottom: 50px;
 }
 
 

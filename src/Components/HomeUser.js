@@ -23,20 +23,26 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
 
     const fetchBookedServices = async () => {
         try {
-            const userId = userEmail.replace('.', '_');
-            const snapshot = await get(ref(database, `services/${userId}`));
+            const userId = userEmail.replace(/\./g, '_');
+            console.log('Fetching services for user:', userId);
+    
+            const snapshot = await get(ref(database, `userServices/${userId}`));
+    
             if (snapshot.exists()) {
                 const servicesList = [];
                 snapshot.forEach(childSnapshot => {
+                    console.log('Service found:', childSnapshot.val());
                     servicesList.push({ id: childSnapshot.key, ...childSnapshot.val() });
                 });
                 setServices(servicesList);
+            } else {
+                console.log('No services found for this user.');
             }
         } catch (error) {
+            console.error('Error fetching services:', error.message);
             setError(error.message);
         }
     };
-
 
     const fetchAllUsers = async () => {
         try {
@@ -61,7 +67,10 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
             if (snapshot.exists()) {
                 const data = snapshot.val();
                 console.log('Fetched approved providers:', data);
-                const providers = Object.values(data).filter(provider => provider.status === 'not_banned');
+                const providers = Object.values(data).map(provider => ({
+                    ...provider,
+                    services: provider.services || []
+                })).filter(provider => provider.status === 'not_banned');
                 setApprovedProviders(providers);
             } else {
                 setError("No providers found.");
@@ -84,10 +93,14 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
         });
     };
 
-
     const formatServices = (services) => {
+        if (!Array.isArray(services)) {
+            return '';
+        }
         return services.join(', ');
-    }
+    };
+
+    console.log('Services to display:', services);
 
     return (
         <div>
@@ -98,48 +111,45 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
             />
             <div className="home-user-page">
                 <div className="client-info">
-                    <h1>Welcome! {clientName}</h1>
+                    <h2>Welcome, {clientName}.</h2>
                 </div>
 
-                <div className="home-user-content">
-                    <div className="calendar-container">
-                        <h3>Upcoming Services Calendar</h3>
-                        {/* Add your calendar component here */}
-                    </div>
-
-                    <div className="services-table-container">
-                        <h3>Your Booked Services</h3>
-                        {services.length > 0 ? (
-                            <table className="services-table">
-                                <thead>
-                                    <tr>
-                                        <th>Service</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Status</th>
+                <div className="services-table-container">
+                    <h3>Your Booked Services</h3>
+                    {services.length > 0 ? (
+                        <table className="services-table">
+                            <thead>
+                                <tr>
+                                    <th>Store Name</th>
+                                    <th>Service</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>Service Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {services.map(service => (
+                                    <tr key={service.id}>
+                                        <td>{service.storeName}</td>
+                                        <td>{service.name}</td>
+                                        <td>{service.date}</td>
+                                        <td>{service.time}</td>
+                                        <td>{service.status}</td>
+                                        <td>{service.address}</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    {services.map(service => (
-                                        <tr key={service.id}>
-                                            <td>{service.name}</td>
-                                            <td>{service.date}</td>
-                                            <td>{service.time}</td>
-                                            <td>{service.status}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        ) : (
-                            <p>No services booked yet.</p>
-                        )}
-                    </div>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : (
+                        <p>No services booked yet.</p>
+                    )}
                 </div>
 
-                <div className='available-services'><br></br><br></br>
-                    <h2>Book a service with one of our providers</h2>
+                <div className='available-services'>
+                    <h3>Book a service with one of our providers</h3>
                     {approvedProviders.length > 0 ? (
-                        <table className="providers-table">
+                        <table className="services-table">
                             <thead>
                                 <tr>
                                     <th>Store Name</th>
@@ -161,7 +171,6 @@ const HomeUser = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => {
                                         </td>
                                     </tr>
                                 ))}
-
                             </tbody>
                         </table>
                     ) : (

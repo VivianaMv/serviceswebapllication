@@ -7,7 +7,7 @@ import Footer from './Footer';
 import { useNavigate } from "react-router-dom";
 
 
-const UserManagement = ({ userEmail, setUserEmail }) => {
+const UserManagement = ({userEmail, setUserEmail }) => {
     const [pendingProviders, setPendingProviders] = useState([]);
     const [approvedProviders, setApprovedProviders] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
@@ -154,7 +154,7 @@ const UserManagement = ({ userEmail, setUserEmail }) => {
 
     return (
         <div>
-            <Header email={email} handleSignOut={() => setIsSignedIn(false)} isSignedIn={isSignedIn} />
+            <Header email={email} handleSignOut={handleSignOut} isSignedIn={isSignedIn} />
             <div className='user-management-page'>
                 <div className='user-management-container'>
                     <h2>Manage Pending Providers</h2>
