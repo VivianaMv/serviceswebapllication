@@ -155,6 +155,10 @@ const SignUpClient = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) =>
 
           {error && <p className="error-message">{error}</p>}
         </form>
+
+        <br></br>
+
+        <div className='signin-signup' onClick={() => navigate("/signin")}>Already have an account? Sign In</div>
       </div>
       <Footer
         userEmail={userEmail}
