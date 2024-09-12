@@ -22,25 +22,43 @@ const SignIn = ({  userEmail, isSignedIn, setUserEmail, setIsSignedIn  }) => {
 
     const handleSignin = async (e) => {
         e.preventDefault();
-
+    
         const sanitizedEmail = email.replace(/\./g, '_');
         const bannedUserRef = ref(database, 'bannedUsers/' + sanitizedEmail);
         const bannedUserSnapshot = await get(bannedUserRef);
-
+    
         if (bannedUserSnapshot.exists()) {
             setError("This email is banned.");
             return;
         }
-
+    
+        const pendingProvidersRef = ref(database, 'pendingProviders');
+        const pendingProvidersSnapshot = await get(pendingProvidersRef);
+    
+        if (pendingProvidersSnapshot.exists()) {
+            let isPending = false;
+            pendingProvidersSnapshot.forEach((providerSnapshot) => {
+                const provider = providerSnapshot.val();
+                if (provider.email === email) {
+                    isPending = true;
+                }
+            });
+    
+            if (isPending) {
+                setError("Your profile is still pending approval from the admin.");
+                return;
+            }
+        }
+    
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const userEmail = userCredential.user.email;
             setUserEmail(userEmail);
-
+    
             const approvedProvidersRef = ref(database, 'approvedProviders');
             const approvedProvidersSnapshot = await get(approvedProvidersRef);
             let isProvider = false;
-
+    
             if (approvedProvidersSnapshot.exists()) {
                 approvedProvidersSnapshot.forEach((providerSnapshot) => {
                     const provider = providerSnapshot.val();
@@ -49,7 +67,7 @@ const SignIn = ({  userEmail, isSignedIn, setUserEmail, setIsSignedIn  }) => {
                     }
                 });
             }
-
+    
             if (userEmail === "admin@gmail.com") {
                 navigate('/homeadmin', { state: { email: userEmail } });
             } else if (isProvider) {
@@ -61,6 +79,7 @@ const SignIn = ({  userEmail, isSignedIn, setUserEmail, setIsSignedIn  }) => {
             setError(error.message);
         }
     };
+    
 
     const handleReset = () => {
         navigate('/reset');

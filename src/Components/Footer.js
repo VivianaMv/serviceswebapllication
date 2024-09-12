@@ -8,9 +8,9 @@ const Footer = () => {
 
     return (
         <div className="footer">
-            <p onClick={() => navigate("/privacy")}>Privacy</p>
+            <p className="foot" onClick={() => navigate("/privacy")}>Privacy</p>
 
-            <p onClick={() => navigate("/termcond")}>Terms and conditions</p>
+            <p className="foot" onClick={() => navigate("/termcond")}>Terms and conditions</p>
         </div>
     )
 };
