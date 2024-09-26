@@ -174,7 +174,7 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
         try {
             const userId = userEmail.replace(/\./g, '_');
             const providerId = providerEmail.replace(/\./g, '_');
-            const serviceId = push(ref(database, 'services')).key; // Unique ID for the service
+            const serviceId = push(ref(database, 'services')).key;
     
             const userServicesRef = ref(database, `userServices/${userId}/${serviceId}`);
             const providerServicesRef = ref(database, `providerServices/${providerId}/${serviceId}`);
@@ -189,7 +189,7 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
                 status: 'Booked',
                 providerEmail: providerEmail,
                 storeName,
-                clientEmail: userEmail // Include clientEmail in the data
+                clientEmail: userEmail
             };
     
             await set(userServicesRef, serviceData);
