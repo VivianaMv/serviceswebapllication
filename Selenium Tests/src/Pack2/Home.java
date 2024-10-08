@@ -28,6 +28,7 @@ class Home {
     }
     
     private void loadHomePage() {
+    	
         driver.get("http://localhost:3000/");  // Update to use a file URI
     }
     
@@ -68,7 +69,7 @@ class Home {
     void testSignInBtn() {
         loadHomePage();
         WebElement signInbtn = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div[3]/button[1]"));
-        // Click on the image
+        // Click on the btn
         signInbtn.click();
 
         // Verify if the current URL is the services page URL
@@ -80,7 +81,7 @@ class Home {
     void testSignUpBtn() {
         loadHomePage();
         WebElement signUpBtn = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div[3]/button[2]"));
-        // Click on the image
+        // Click on the btn
         signUpBtn.click();
 
         // Verify if the current URL is the services page URL
@@ -98,7 +99,7 @@ class Home {
 
         // Verify if the current URL is the services page URL
         String currentUrl = driver.getCurrentUrl();
-        assertEquals("http://localhost:3000/services", currentUrl, "The URL should navigate to the services page.");
+        assertEquals("http://localhost:3000/services", currentUrl, "The URL should navigate to the cleaning page.");
     }
     
     @Test
@@ -110,7 +111,7 @@ class Home {
 
         // Verify if the current URL is the services page URL
         String currentUrl = driver.getCurrentUrl();
-        assertEquals("http://localhost:3000/services", currentUrl, "The URL should navigate to the services page.");
+        assertEquals("http://localhost:3000/services", currentUrl, "The URL should navigate to the gardening page.");
     }
 
     @Test
@@ -122,7 +123,7 @@ class Home {
 
         // Verify if the current URL is the services page URL
         String currentUrl = driver.getCurrentUrl();
-        assertEquals("http://localhost:3000/services", currentUrl, "The URL should navigate to the services page.");
+        assertEquals("http://localhost:3000/services", currentUrl, "The URL should navigate to the painting page.");
     }
     
     @Test
@@ -134,19 +135,19 @@ class Home {
 
         // Verify if the current URL is the services page URL
         String currentUrl = driver.getCurrentUrl();
-        assertEquals("http://localhost:3000/privacy", currentUrl, "The URL should navigate to the services page.");
+        assertEquals("http://localhost:3000/privacy", currentUrl, "The URL should navigate to the privacy page.");
     }
     
     @Test
     void testTermandCondLink() {
         loadHomePage();
         WebElement TermandCondlink = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[3]/p[2]"));
-        // Click on privacy
+        // Click on term and conditions.
         TermandCondlink.click();
 
         // Verify if the current URL is the services page URL
         String currentUrl = driver.getCurrentUrl();
-        assertEquals("http://localhost:3000/termcond", currentUrl, "The URL should navigate to the services page.");
+        assertEquals("http://localhost:3000/termcond", currentUrl, "The URL should navigate to the term and condition  page.");
     }
     
     

@@ -175,11 +175,11 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
             const userId = userEmail.replace(/\./g, '_');
             const providerId = providerEmail.replace(/\./g, '_');
             const serviceId = push(ref(database, 'services')).key;
-    
+
             const userServicesRef = ref(database, `userServices/${userId}/${serviceId}`);
             const providerServicesRef = ref(database, `providerServices/${providerId}/${serviceId}`);
             const adminServicesRef = ref(database, `adminServices/${serviceId}`);
-    
+
             const serviceData = {
                 id: serviceId,
                 name: serviceType,
@@ -191,13 +191,13 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
                 storeName,
                 clientEmail: userEmail
             };
-    
+
             await set(userServicesRef, serviceData);
             await set(providerServicesRef, serviceData);
             await set(adminServicesRef, serviceData);
-    
+
             console.log('Service saved to Firebase.');
-    
+
         } catch (error) {
             console.error('Error saving service to Firebase:', error.message);
             setError('Error saving service to Firebase: ' + error.message);
@@ -215,7 +215,7 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
             <div className='form-container'>
                 <form className='client-form' onSubmit={handleServiceBooking}>
                     <label>Service Type:<br /></label>
-                    <select className='book-service-input' value={serviceType} onChange={(e) => setServiceType(e.target.value)} required>
+                    <select className='book-service-input'  value={serviceType} onChange={(e) => setServiceType(e.target.value)} required>
                         <option value="">Select Service</option>
                         <option value="Painting">Painting</option>
                         <option value="Cleaning">Cleaning</option>
@@ -231,7 +231,7 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
                     <label>Service Address:</label>
                     <input className='book-service-input' type='text' value={serviceAddress} onChange={(e) => setServiceAddress(e.target.value)} required />
                     <br></br>
-                    <button type='submit'>Book Service</button>
+                    <button type='submit'  >Book Service</button>
                 </form>
                 {error && <p className="error-message">{error}</p>}
             </div>
