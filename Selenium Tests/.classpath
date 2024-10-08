@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/maina/OneDrive/CND/CEGEP GIM/selenium-server-4.23.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="C:/Users/Viviana Montoya V/Desktop/selenium-server-4.23.0 (1).jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
