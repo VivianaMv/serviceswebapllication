@@ -24,12 +24,12 @@ class HomeAdmin {
         driver = new ChromeDriver();
     }
 
-//    @AfterEach
-//	void tearDown() {
-//		if (driver != null) {
-//			driver.quit();
-//		}
-//		}
+    @AfterEach
+	void tearDown() {
+		if (driver != null) {
+			driver.quit();
+		}
+		}
 		 private void HomeAdmin() {
 	    	   driver.get("http://localhost:3000/homeuser");  // Update to use a file URI
 	    	       

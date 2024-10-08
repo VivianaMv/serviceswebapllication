@@ -24,12 +24,12 @@ class HomeProvider {
         driver = new ChromeDriver();
     }
 
-//    @AfterEach
-//	void tearDown() {
-//		if (driver != null) {
-//			driver.quit();
-//		}
-//		}
+    @AfterEach
+	void tearDown() {
+		if (driver != null) {
+			driver.quit();
+		}
+		}
 		 private void HomePageProvider() {
 	    	   driver.get("http://localhost:3000/homeuser");  // Update to use a file URI
 	    	       
@@ -55,53 +55,53 @@ class HomeProvider {
 
 		   	    
 		    }
+
+
+			@Test
+			void testSignUpBtn() {
+				HomePageProvider();
+			    WebElement signUpBtn = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div[3]/button[2]"));
+			    // Click on the btn
+			    signUpBtn.click();
+			    
+			    String currentUrl = driver.getCurrentUrl();
+			    assertEquals("http://localhost:3000/signupoptions", currentUrl, "The URL should navigate to the SignUp page.");
+			}
+			
+			@Test
+			void testPrivacyLink() {
+				HomePageProvider();
+			    WebElement privacylink = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[3]/p[1]"));
+			    // Click on privacy
+			    privacylink.click();
+			    
+			    String currentUrl = driver.getCurrentUrl();
+			    assertEquals("http://localhost:3000/privacy", currentUrl, "The URL should navigate to the privacy page.");
+			
+			}
+			@Test
+			void testTermandCondLink() {
+				HomePageProvider();
+			    WebElement TermandCondlink = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[3]/p[2]"));
+			    // Click on term and conditions.
+			    TermandCondlink.click();
+			    
+			    String currentUrl = driver.getCurrentUrl();
+			    assertEquals("http://localhost:3000/termcond", currentUrl, "The URL should navigate to the term and condition  page.");
+			
+			}
+			@Test
+			void testHomeLink() {
+				HomePageProvider();
+			    WebElement Homelink = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div[2]/a[1]"));
+			    // Click on term and conditions.
+			    Homelink.click();
+			    
+			    String currentUrl = driver.getCurrentUrl();
+			    assertEquals("http://localhost:3000/", currentUrl, "The URL should navigate to the home page.");
+			
+			}
+			
+
+
 }
-//
-//			@Test
-//			void testSignUpBtn() {
-//				HomePageProvider();
-//			    WebElement signUpBtn = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div[3]/button[2]"));
-//			    // Click on the btn
-//			    signUpBtn.click();
-//			    
-//			    String currentUrl = driver.getCurrentUrl();
-//			    assertEquals("http://localhost:3000/signupoptions", currentUrl, "The URL should navigate to the SignUp page.");
-//			}
-//			
-//			@Test
-//			void testPrivacyLink() {
-//				HomePageProvider();
-//			    WebElement privacylink = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[3]/p[1]"));
-//			    // Click on privacy
-//			    privacylink.click();
-//			    
-//			    String currentUrl = driver.getCurrentUrl();
-//			    assertEquals("http://localhost:3000/privacy", currentUrl, "The URL should navigate to the privacy page.");
-//			
-//			}
-//			@Test
-//			void testTermandCondLink() {
-//				HomePageProvider();
-//			    WebElement TermandCondlink = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[3]/p[2]"));
-//			    // Click on term and conditions.
-//			    TermandCondlink.click();
-//			    
-//			    String currentUrl = driver.getCurrentUrl();
-//			    assertEquals("http://localhost:3000/termcond", currentUrl, "The URL should navigate to the term and condition  page.");
-//			
-//			}
-//			@Test
-//			void testHomeLink() {
-//				HomePageProvider();
-//			    WebElement Homelink = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/div[2]/a[1]"));
-//			    // Click on term and conditions.
-//			    Homelink.click();
-//			    
-//			    String currentUrl = driver.getCurrentUrl();
-//			    assertEquals("http://localhost:3000/", currentUrl, "The URL should navigate to the home page.");
-//			
-//			}
-//			
-//
-//
-//}
