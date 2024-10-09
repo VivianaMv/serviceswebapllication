@@ -93,7 +93,7 @@ const BookService = ({ userEmail, isSignedIn, setUserEmail, setIsSignedIn }) => 
 
         if (window.google && window.google.accounts) {
             const client = window.google.accounts.oauth2.initTokenClient({
-                client_id: '65310157307-s5t6gtlqklb40ffra9t0a9bsk7vqihdk.apps.googleusercontent.com', // Your Client ID
+                client_id: '65310157307-s5t6gtlqklb40ffra9t0a9bsk7vqihdk.apps.googleusercontent.com',
                 scope: 'https://www.googleapis.com/auth/calendar',
                 callback: (response) => {
                     if (response.error) {
